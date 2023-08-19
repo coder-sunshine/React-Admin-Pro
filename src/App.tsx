@@ -1,15 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import A from '@/components/A'
-
+import md5 from 'md5'
+import { loginApi } from './api/modules/login'
 function App() {
   const [count, setCount] = useState(0)
+  useEffect(() => {
+    loginApi({ username: 'admin', password: md5('123456') }).then(res => {
+      console.log('res', res)
+    })
+  }, [])
+
   return (
     <>
       <div>
-        <A></A>
         <a href='https://vitejs.dev' target='_blank'>
           <img src={viteLogo} className='logo' alt='Vite logo' />
         </a>
