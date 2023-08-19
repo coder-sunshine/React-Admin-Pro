@@ -9,13 +9,16 @@
     "preview": "vite preview",
     "lint:eslint": "eslint --fix --ext .js,.ts,.tsx ./src",
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,html,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git add -A && czg && git push"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
     "@types/eslint": "^8.44.2",
     "@types/node": "^20.5.1",
     "@types/react": "^18.2.15",
@@ -23,6 +26,8 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "cz-git": "^1.7.1",
+    "czg": "^1.7.1",
     "eslint": "^8.45.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
@@ -43,5 +48,10 @@
       "pnpm lint:eslint",
       "pnpm lint:prettier"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   }
 }
