@@ -1,11 +1,15 @@
 {
   "name": "react-template",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "serve": "vite",
+    "build:dev": "tsc && vite build --mode development",
+    "build:test": "tsc && vite build --mode test",
+    "build:pro": "tsc && vite build --mode production",
+    "type:check": "tsc --noEmit --skipLibCheck",
     "preview": "vite preview",
     "lint:eslint": "eslint --fix --ext .js,.ts,.tsx ./src",
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,html,md}\"",
@@ -14,6 +18,7 @@
     "commit": "git add -A && czg && git push"
   },
   "dependencies": {
+    "dayjs": "^1.11.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -27,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.15",
     "cz-git": "^1.7.1",
     "czg": "^1.7.1",
     "eslint": "^8.45.0",
@@ -44,6 +50,7 @@
     "postcss-html": "^1.5.0",
     "postcss-less": "^6.0.0",
     "prettier": "^3.0.2",
+    "rollup-plugin-visualizer": "^5.9.2",
     "stylelint": "^15.10.3",
     "stylelint-config-recess-order": "^4.3.0",
     "stylelint-config-recommended-less": "^1.0.4",
@@ -54,7 +61,12 @@
     "stylelint-scss": "^5.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-stylelint": "^5.0.0"
+    "vite-plugin-checker": "^0.6.1",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-html": "^3.2.0",
+    "vite-plugin-pwa": "^0.16.4",
+    "vite-plugin-stylelint": "^5.0.0",
+    "vite-plugin-svg-icons": "^2.0.1"
   },
   "lint-staged": {
     "*.{css,less,scss}": [

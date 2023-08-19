@@ -6,7 +6,6 @@ import A from '@/components/A'
 
 function App() {
   const [count, setCount] = useState(0)
-
   return (
     <>
       <div>
