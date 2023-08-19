@@ -2,12 +2,11 @@
 const fs = require('fs')
 const path = require('path')
 
+// 匹配 components -- assets (src下面带s结尾的文件夹)
 const scopes = fs
   .readdirSync(path.resolve(__dirname, 'src'), { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
   .map(dirent => dirent.name.replace(/s$/, ''))
-
-console.log('scopes', scopes)
 
 /** @type {import('cz-git').UserConfig} */
 module.exports = {
