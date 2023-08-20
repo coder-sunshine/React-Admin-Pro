@@ -14,7 +14,7 @@ const persistConfig = {
   // 存储方式
   storage: storage,
   // 黑名单
-  blacklist: [],
+  blacklist: ['user'],
   // 白名单
   whitelist: [],
 }
