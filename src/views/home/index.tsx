@@ -1,5 +1,8 @@
+import { RootState, useSelector } from '@/redux'
+
 const Home: React.FC = () => {
-  return <div className='home-container'>home</div>
+  const { token } = useSelector((state: RootState) => state.user)
+  return <div className='home-container'>{token}</div>
 }
 
 export default Home
