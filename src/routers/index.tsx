@@ -4,14 +4,26 @@ import type { RouteObjectType } from './interface'
 import { wrappedStaticRouter } from './modules/staticRouter'
 import useMessage from '@/hooks/useMessage'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import NotFound from '@/components/Error/404'
 
 const mode = import.meta.env.VITE_ROUTER_MODE
 
 const RouterProvider: React.FC = () => {
   // 执行一次useMessage，注册message组件
   useMessage()
-  const [routerList] = useState<RouteObjectType[]>(wrappedStaticRouter)
+  const [routerList, setRouterList] = useState<RouteObjectType[]>(wrappedStaticRouter)
+
+  useEffect(() => {
+    // 可以在此处理动态路由，添加到 allRouter 中
+
+    let allRouter = [...wrappedStaticRouter]
+    // 为了防止404刷新页面，请在页面末尾添加*路由
+    allRouter.forEach(item => item.path === '*' && (item.element = <NotFound />))
+
+    setRouterList(allRouter)
+  }, [])
+
   const routerMode = {
     hash: () => createHashRouter(routerList as RouteObject[]),
     history: () => createBrowserRouter(routerList as RouteObject[]),
