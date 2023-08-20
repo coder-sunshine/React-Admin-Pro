@@ -8,7 +8,6 @@ let notification: NotificationInstance
 let modal: Omit<ModalStaticFunctions, 'warn'>
 
 export default () => {
-  console.log('123', 123)
   const staticFunction = App.useApp()
   message = staticFunction.message
   modal = staticFunction.modal

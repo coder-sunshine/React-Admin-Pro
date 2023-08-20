@@ -20,6 +20,11 @@ declare interface ViteEnv {
   VITE_PROXY: [string, string][]
 }
 
+// 定义 ImportMetaEnv 让 vite 可以识别 .env.xxx 文件
+interface ImportMetaEnv extends ViteEnv {
+  __: unknown
+}
+
 /* __APP_INFO__ */
 declare const __APP_INFO__: {
   pkg: {
