@@ -15,9 +15,10 @@
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "prepare": "husky install",
-    "commit": "git add -A && czg && git push"
+    "commit": "czg && git push"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.5",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.8.4",
     "axios": "^1.4.0",

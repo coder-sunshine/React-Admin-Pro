@@ -1,23 +1,25 @@
-import { useNavigate } from 'react-router-dom'
-import { loginApi } from '@/api/modules/login'
-import { useDispatch } from '@/redux'
-import { setToken } from '@/redux/modules/user'
-import { useEffect } from 'react'
-import md5 from 'md5'
-import { HOME_URL } from '@/config'
+import loginIllustration from '@/assets/images/login_illustration.svg'
+import logo from '@/assets/images/logo.svg'
+import LoginForm from './components/LoginForm'
+import './index.less'
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    loginApi({ username: 'admin', password: md5('123456') }).then(res => {
-      console.log('res.data', res.data.access_token)
-      dispatch(setToken(res.data.access_token))
-      navigate(HOME_URL)
-    })
-  }, [])
-  return <div className='login-container'>login form</div>
+  return (
+    <div className='login-container'>
+      <div className='login-content'>
+        <div className='login-illustration'>
+          <img src={loginIllustration} alt='illustration' />
+        </div>
+        <div className='login-form'>
+          <div className='login-form-title'>
+            <img className='login-title-logo' src={logo} alt='logo' />
+            <span className='login-title-text'>Hooks-Admin</span>
+          </div>
+          <LoginForm />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default Login
