@@ -5,9 +5,10 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import reduxThunk from 'redux-thunk'
 import user from './modules/user'
+import global from './modules/global'
 
 // create reducer
-const reducer = combineReducers({ user })
+const reducer = combineReducers({ user, global })
 
 const persistConfig = {
   key: 'redux-state',

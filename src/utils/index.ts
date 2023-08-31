@@ -11,3 +11,12 @@ export function getTimeState() {
   if (hours >= 18 && hours <= 24) return `晚上好 🌛`
   if (hours >= 0 && hours <= 6) return `凌晨好 🌛`
 }
+
+/**
+ * @description 设置样式属性
+ * @param {String} key - The key name of the style property
+ * @param {String} val - The value of the style attribute
+ */
+export function setStyleProperty(key: string, val: string) {
+  document.documentElement.style.setProperty(key, val)
+}

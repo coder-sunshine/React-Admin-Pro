@@ -1,12 +1,14 @@
 import loginIllustration from '@/assets/images/login_illustration.svg'
 import logo from '@/assets/images/logo.svg'
 import LoginForm from './components/LoginForm'
+import SwitchDark from '@/components/SwitchDark'
 import './index.less'
 
 const Login: React.FC = () => {
   return (
     <div className='login-container'>
       <div className='login-content'>
+        <SwitchDark />
         <div className='login-illustration'>
           <img src={loginIllustration} alt='illustration' />
         </div>

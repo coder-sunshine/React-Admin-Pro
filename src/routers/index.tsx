@@ -6,10 +6,12 @@ import useMessage from '@/hooks/useMessage'
 
 import { useEffect, useState } from 'react'
 import NotFound from '@/components/Error/404'
+import useTheme from '@/hooks/useTheme'
 
 const mode = import.meta.env.VITE_ROUTER_MODE
 
 const RouterProvider: React.FC = () => {
+  useTheme()
   // 执行一次useMessage，注册message组件
   useMessage()
   const [routerList, setRouterList] = useState<RouteObjectType[]>(wrappedStaticRouter)
