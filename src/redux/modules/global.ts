@@ -23,6 +23,8 @@ const globalState: GlobalState = {
   isGrey: false,
   // 色弱模式
   isWeak: false,
+  // 快乐工作主题
+  isHappy: true,
   // menu splitting
   menuSplit: true,
   // sidebar Invert Color

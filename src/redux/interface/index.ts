@@ -19,6 +19,7 @@ export interface GlobalState {
   isDark: boolean
   isGrey: boolean
   isWeak: boolean
+  isHappy: boolean
   menuSplit: boolean
   siderInverted: boolean
   headerInverted: boolean
