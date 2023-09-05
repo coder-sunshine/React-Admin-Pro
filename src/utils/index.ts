@@ -1,3 +1,5 @@
+import { RouteObjectType } from '@/routers/interface'
+
 /**
  * @description 获取当前时间对应的问候语
  * @returns {String}
@@ -19,4 +21,9 @@ export function getTimeState() {
  */
 export function setStyleProperty(key: string, val: string) {
   document.documentElement.style.setProperty(key, val)
+}
+
+export function getFlatMenuList(menuList: RouteObjectType[]): RouteObjectType[] {
+  let newMenuList: RouteObjectType[] = JSON.parse(JSON.stringify(menuList))
+  return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])])
 }

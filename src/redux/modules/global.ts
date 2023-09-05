@@ -35,7 +35,7 @@ const globalState: GlobalState = {
   isCollapse: false,
   // 菜单手风琴
   accordion: true,
-  // water mark
+  // 水印
   watermark: true,
   // 面包屑导航
   breadcrumb: true,

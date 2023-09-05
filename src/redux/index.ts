@@ -6,18 +6,19 @@ import storage from 'redux-persist/lib/storage'
 import reduxThunk from 'redux-thunk'
 import user from './modules/user'
 import global from './modules/global'
+import auth from './modules/auth'
 
 // create reducer
-const reducer = combineReducers({ user, global })
+const reducer = combineReducers({ user, global, auth })
 
 const persistConfig = {
   key: 'redux-state',
   // 存储方式
   storage: storage,
   // 黑名单
-  blacklist: ['user'],
+  blacklist: [],
   // 白名单
-  whitelist: [],
+  whitelist: ['user'],
 }
 
 const persistReducerConfig = persistReducer(persistConfig, reducer)

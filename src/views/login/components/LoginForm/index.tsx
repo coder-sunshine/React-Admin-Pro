@@ -10,6 +10,7 @@ import { setToken } from '@/redux/modules/user'
 import { getTimeState } from '@/utils'
 import { useNavigate } from 'react-router-dom'
 import { HOME_URL } from '@/config'
+import usePermissions from '@/hooks/usePermissions'
 
 const LoginForm: React.FC = () => {
   type FieldType = {
@@ -22,6 +23,8 @@ const LoginForm: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const { initPermissions } = usePermissions()
+
   const [loading, setLoading] = useState(false)
 
   const onFinish = async (values: any) => {
@@ -31,12 +34,14 @@ const LoginForm: React.FC = () => {
       const { data } = await loginApi({ ...values, password: md5(values.password) })
       dispatch(setToken(data.access_token))
 
+      // 设置权限
+      await initPermissions(data.access_token)
+
       notification.success({
         message: getTimeState(),
         description: '欢迎登录 Hooks-Admin',
         icon: <CheckCircleFilled style={{ color: '#73d13d' }} />,
       })
-
       navigate(HOME_URL)
     } finally {
       setLoading(false)
