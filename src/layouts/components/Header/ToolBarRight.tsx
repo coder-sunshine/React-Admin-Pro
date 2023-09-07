@@ -2,6 +2,7 @@ import ComponentSize from './components/ComponentSize'
 import Language from './components/Language'
 import SearchMenu from './components/SearchMenu'
 import Message from './components/Message'
+import Fullscreen from './components/Fullscreen'
 
 const ToolBarRight: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const ToolBarRight: React.FC = () => {
         <Language />
         <SearchMenu />
         <Message />
+        <Fullscreen />
       </div>
     </div>
   )
