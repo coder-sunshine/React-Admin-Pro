@@ -40,6 +40,42 @@
   }
 }
 
+/* Message */
+.message-popover {
+  .ant-popover-content {
+    width: 305px;
+  }
+  .notice-list {
+    display: flex;
+    flex-direction: column;
+    .notice-item {
+      display: flex;
+      align-items: center;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--hooks-colorBorderSecondary);
+      &:last-child {
+        border: none;
+      }
+      .notice-icon {
+        width: 40px;
+        height: 40px;
+        margin: 0 20px 0 5px;
+      }
+      .notice-content {
+        display: flex;
+        flex-direction: column;
+        .notice-title {
+          margin-bottom: 5px;
+        }
+        .notice-time {
+          font-size: 12px;
+          color: var(--hooks-colorTextSecondary);
+        }
+      }
+    }
+  }
+}
+
 /* Search Menu */
 .search-modal {
   .menu-list {
