@@ -20,3 +20,8 @@ export const getAuthButtonListApi = () => {
 export const getAuthMenuListApi = () => {
   return http.get<AuthState['authMenuList']>(PORT1 + `/menu/list`)
 }
+
+// 退出登录
+export const logoutApi = () => {
+  return http.post(PORT1 + `/logout`, {}, { loading: true })
+}

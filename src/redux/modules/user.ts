@@ -4,7 +4,7 @@ import { UserState } from '../interface'
 const userState: UserState = {
   token: '',
   userInfo: {
-    name: '',
+    name: 'Hooks',
   },
 }
 

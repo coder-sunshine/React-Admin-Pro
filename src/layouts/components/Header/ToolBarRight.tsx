@@ -3,6 +3,8 @@ import Language from './components/Language'
 import SearchMenu from './components/SearchMenu'
 import Message from './components/Message'
 import Fullscreen from './components/Fullscreen'
+import UserName from './components/UserName'
+import AvatarIcon from './components/AvatarIcon'
 
 const ToolBarRight: React.FC = () => {
   return (
@@ -14,6 +16,8 @@ const ToolBarRight: React.FC = () => {
         <Message />
         <Fullscreen />
       </div>
+      <UserName />
+      <AvatarIcon />
     </div>
   )
 }
