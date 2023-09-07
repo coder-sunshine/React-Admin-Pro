@@ -19,7 +19,6 @@ const usePermissions = () => {
 
         // 获取菜单权限
         const { data: menuList } = await getAuthMenuListApi()
-        console.log('menuList', menuList)
         dispatch(setAuthMenuList(menuList))
 
         if (menuList.length === 0) {

@@ -1,5 +1,12 @@
+import LayoutVertical from './LayoutVertical'
+// import LayoutClassic from './LayoutClassic'
+
 const LayoutIndex: React.FC = () => {
-  return <>123</>
+  return (
+    <>
+      <LayoutVertical />
+    </>
+  )
 }
 
 export default LayoutIndex

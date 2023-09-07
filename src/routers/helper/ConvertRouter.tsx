@@ -8,7 +8,7 @@ import LayoutIndex from '@/layouts'
 
 // 导入views目录中的所有视图文件 --> Parameters 获取参数类型
 const modules = import.meta.glob('@/views/**/*.tsx') as Record<string, Parameters<typeof lazy>[number]>
-console.log('modules', modules)
+
 /**
  * @description 将menuList转换为react-router所需的格式
  * @param {Array} authMenuList 权限菜单列表

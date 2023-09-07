@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { RootState, useSelector } from '@/redux'
 import { theme } from 'antd'
 import globalTheme from '@/styles/theme/global'
+import siderTheme from '@/styles/theme/sider'
+import headerTheme from '@/styles/theme/header'
 import { setStyleProperty } from '@/utils'
 import { getLightColor, getDarkColor } from '@/utils/color'
 
@@ -11,7 +13,9 @@ const useTheme = () => {
   // token 里面是预设css变量
   const { token } = theme.useToken()
 
-  const { isDark, borderRadius, primary, compactAlgorithm } = useSelector((state: RootState) => state.global)
+  const { isDark, borderRadius, primary, compactAlgorithm, siderInverted, headerInverted } = useSelector(
+    (state: RootState) => state.global
+  )
 
   // 切换暗黑模式
   useEffect(() => switchDark(), [isDark])
@@ -38,6 +42,24 @@ const useTheme = () => {
         isDark ? `${getDarkColor(primary, i / 10)}` : `${getLightColor(primary, i / 10)}`
       )
     }
+  }
+
+  /**
+   * @description 切换 sider 主题
+   */
+  useEffect(() => changeSiderTheme(), [isDark, siderInverted])
+  const changeSiderTheme = () => {
+    const type: ThemeType = isDark ? 'dark' : siderInverted ? 'inverted' : 'light'
+    Object.entries(siderTheme[type]).forEach(([key, val]) => setStyleProperty(key, val))
+  }
+
+  /**
+   * @description 切换 header 主题
+   */
+  useEffect(() => changeHeaderTheme(), [isDark, headerInverted])
+  const changeHeaderTheme = () => {
+    const type: ThemeType = isDark ? 'dark' : headerInverted ? 'inverted' : 'light'
+    Object.entries(headerTheme[type]).forEach(([key, val]) => setStyleProperty(key, val))
   }
 }
 

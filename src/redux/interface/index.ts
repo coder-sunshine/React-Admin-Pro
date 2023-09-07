@@ -40,4 +40,6 @@ export interface GlobalState {
 export interface AuthState {
   authMenuList: RouteObjectType[]
   authButtonList: Record<string, string[]>
+  showMenuList: RouteObjectType[]
+  flatMenuList: RouteObjectType[]
 }
