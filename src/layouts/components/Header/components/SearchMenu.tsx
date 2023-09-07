@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Empty, Input, InputRef, Modal } from 'antd'
 import { EnterOutlined, SearchOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
@@ -20,22 +20,63 @@ const SearchMenu: React.FC = () => {
 
   const debouncedSearchValue = useDebounce(searchValue, { wait: 300 })
 
-  const searchList = debouncedSearchValue
-    ? flatMenuList.filter(item => {
-        return (
-          (item.path!.toLowerCase().includes(debouncedSearchValue.toLowerCase()) ||
-            item.meta!.title!.toLowerCase().includes(debouncedSearchValue.toLowerCase())) &&
-          !item.meta?.isHide
-        )
-      })
-    : []
-
   const showModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
+
+  // 需要使用useMemo优化，不然下面列表变化保持第一个高亮导致bug
+  const searchList = useMemo(() => {
+    return debouncedSearchValue
+      ? flatMenuList.filter(
+          item =>
+            (item.path!.toLowerCase().includes(debouncedSearchValue.toLowerCase()) ||
+              item.meta!.title!.toLowerCase().includes(debouncedSearchValue.toLowerCase())) &&
+            !item.meta?.isHide
+        )
+      : []
+  }, [debouncedSearchValue])
+
+  // 列表变化保持第一个高亮
+  useEffect(() => {
+    searchList.length ? setActivePath(searchList[0].path!) : setActivePath('')
+  }, [searchList])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value)
   }
+
+  const keyPressUpOrDown = (direction: number) => {
+    const { length } = searchList
+    if (length === 0) return
+    const index = searchList.findIndex(item => item.path === activePath)
+    const newIndex = (index + direction + length) % length
+    setActivePath(searchList[newIndex].path!)
+    // 改变scrollTop
+    if (menuListRef.current?.firstElementChild) {
+      const menuItemHeight = menuListRef.current.firstElementChild.clientHeight + 12 || 0
+      menuListRef.current.scrollTop = newIndex * menuItemHeight
+    }
+  }
+
+  const keyboardOperation = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      keyPressUpOrDown(-1)
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      keyPressUpOrDown(1)
+    } else if (event.key === 'Enter') {
+      event.preventDefault()
+      selectMenuItem()
+    }
+  }
+
+  // 注册键盘事件
+  useEffect(() => {
+    const handler = isModalOpen ? window.addEventListener : window.removeEventListener
+    handler('keydown', keyboardOperation)
+    return () => window.removeEventListener('keydown', keyboardOperation)
+    // keyboardOperation --> 填上这个可以每次按下重新渲染页面,拿到最新的searchList --> 解决 searchList 为空的问题
+  }, [isModalOpen, keyboardOperation])
 
   useEffect(() => {
     if (isModalOpen) {
