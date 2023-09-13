@@ -6,6 +6,7 @@ import ToolBarLeft from '../components/Header/ToolBarLeft'
 import ToolBarRight from '../components/Header/ToolBarRight'
 
 import './index.less'
+import LayoutMain from '../components/Main'
 
 const { Sider, Header } = Layout
 
@@ -28,6 +29,7 @@ const LayoutVertical: React.FC = () => {
           <ToolBarLeft />
           <ToolBarRight />
         </Header>
+        <LayoutMain />
       </Layout>
     </section>
   )

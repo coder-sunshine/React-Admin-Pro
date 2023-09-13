@@ -1,11 +1,12 @@
-import { useNavigate } from 'react-router-dom'
-import { RouteObjectType } from '@/routers/interface'
+import { useLocation, useMatches, useNavigate } from 'react-router-dom'
+import { MetaProps, RouteObjectType } from '@/routers/interface'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
 import { Icon } from '@/components/Icon'
 import { RootState, useSelector } from '@/redux'
 
 import './index.less'
+import { useEffect, useState } from 'react'
 
 interface LayoutMenuProps {
   mode: MenuProps['mode']
@@ -15,8 +16,13 @@ interface LayoutMenuProps {
 const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
   type MenuItem = Required<MenuProps>['items'][number]
 
+  const matches = useMatches()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   const { showMenuList } = useSelector((state: RootState) => state.auth)
+
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
 
   function getItem(
     label: React.ReactNode,
@@ -46,6 +52,13 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
 
   const antdMenuList = handleMenuAsAntdFormat(menuList ?? showMenuList)
 
+  useEffect(() => {
+    const meta = matches[matches.length - 1].data as MetaProps
+    // 设置选中的key
+    const path = meta?.activeMenu ?? pathname
+    setSelectedKeys([path])
+  }, [matches])
+
   const handleMenuNavigation = (path: string) => {
     const menuItem = showMenuList.find(item => item.path === path)
     if (menuItem?.meta?.isFull) {
@@ -59,7 +72,7 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
     return handleMenuNavigation(key)
   }
 
-  return <Menu mode={mode} items={antdMenuList} onClick={clickMenu}></Menu>
+  return <Menu mode={mode} selectedKeys={selectedKeys} items={antdMenuList} onClick={clickMenu}></Menu>
 }
 
 export default LayoutMenu

@@ -81,6 +81,7 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { max: 1 }], // 不允许多个空行
     'no-use-before-define': 'off', // 禁止在 函数/类/变量 定义之前使用它们
     'prefer-const': 'off', // 使用 let 关键字声明但在初始分配后从未重新分配的变量，要求使用 const
+    'no-debugger': 'off', // 禁用 debugger
 
     // typeScript (https://typescript-eslint.io/rules)
     '@typescript-eslint/no-unused-vars': 'error', // 禁止定义未使用的变量
