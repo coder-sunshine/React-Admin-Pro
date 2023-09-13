@@ -37,9 +37,8 @@ const BreadcrumbNav: React.FC = () => {
 
     // 获取当前页面对应的面包屑 --> 数组最后一项就是当前菜单的面包屑
     let breadcrumbList = breadcrumbAllList[meta.key] || []
-
     // 如果不需要在主页上添加面包屑，可以删除以下判断
-    if (breadcrumbList[0].path !== HOME_URL) {
+    if (breadcrumbList[0]?.path !== HOME_URL) {
       breadcrumbList.unshift({ path: HOME_URL, meta: { icon: 'HomeOutlined', title: '首页' } })
     }
 
