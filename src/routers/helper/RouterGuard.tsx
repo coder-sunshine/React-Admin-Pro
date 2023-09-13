@@ -22,6 +22,7 @@ const RouterGuard: React.FC<RouterGuardProps> = props => {
   window.$navigate = navigate
 
   const token = useSelector((state: RootState) => state.user.token)
+  const authMenuList = useSelector((state: RootState) => state.auth.authMenuList)
 
   useEffect(() => {
     const meta = loader as MetaProps
@@ -33,13 +34,13 @@ const RouterGuard: React.FC<RouterGuardProps> = props => {
     // 白名单
     if (ROUTER_WHITE_LIST.includes(pathname)) return
 
-    // 如果在访问的页面上有菜单数据、令牌或登录，则重定向到主页
-    if (token && pathname === LOGIN_URL) {
+    // 如果在访问的页面上有菜单数据、令牌、去登录页面，则重定向到主页
+    if (authMenuList.length && token && pathname === LOGIN_URL) {
       return navigate(HOME_URL)
     }
 
-    // 如果没有菜单数据，没有令牌&&所访问的页面不登录，重定向到登录页面
-    if (!token && pathname !== LOGIN_URL) {
+    // 如果没有菜单数据，没有令牌&&所访问的页面不是登录页面，重定向到登录页面
+    if (!authMenuList.length && !token && pathname !== LOGIN_URL) {
       return navigate(LOGIN_URL, { replace: true })
     }
   }, [loader])
