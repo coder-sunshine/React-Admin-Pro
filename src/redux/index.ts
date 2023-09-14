@@ -7,9 +7,10 @@ import reduxThunk from 'redux-thunk'
 import user from './modules/user'
 import global from './modules/global'
 import auth from './modules/auth'
+import tabs from './modules/tabs'
 
 // create reducer
-const reducer = combineReducers({ user, global, auth })
+const reducer = combineReducers({ user, global, auth, tabs })
 
 const persistConfig = {
   key: 'redux-state',

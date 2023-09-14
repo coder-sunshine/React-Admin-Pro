@@ -43,3 +43,14 @@ export interface AuthState {
   showMenuList: RouteObjectType[]
   flatMenuList: RouteObjectType[]
 }
+
+export interface TabsListProp {
+  icon: string
+  title: string
+  path: string
+  closable: boolean
+}
+
+export interface TabsState {
+  tabsList: TabsListProp[]
+}

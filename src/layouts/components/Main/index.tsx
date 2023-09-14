@@ -1,11 +1,17 @@
-// import { Layout } from 'antd'
-// import { useOutlet } from 'react-router-dom'
+import { Layout } from 'antd'
+import { useOutlet } from 'react-router-dom'
+import LayoutTabs from '../Tabs'
 
-// const { Content } = Layout
+const { Content } = Layout
 
 const LayoutMain: React.FC = () => {
-  // const outlet = useOutlet()
+  const outlet = useOutlet()
 
-  return <>{/* <Content>{outlet}</Content> */}</>
+  return (
+    <>
+      <LayoutTabs />
+      <Content>{outlet}</Content>
+    </>
+  )
 }
 export default LayoutMain

@@ -11,6 +11,7 @@ import { getTimeState } from '@/utils'
 import { useNavigate } from 'react-router-dom'
 import { HOME_URL } from '@/config'
 import usePermissions from '@/hooks/usePermissions'
+import { setTabsList } from '@/redux/modules/tabs'
 
 const LoginForm: React.FC = () => {
   type FieldType = {
@@ -31,8 +32,12 @@ const LoginForm: React.FC = () => {
     try {
       setLoading(true)
       message.open({ type: 'loading', content: '登录中...' })
+
       const { data } = await loginApi({ ...values, password: md5(values.password) })
       dispatch(setToken(data.access_token))
+
+      // 清除tabs
+      dispatch(setTabsList([]))
 
       // 设置权限
       await initPermissions(data.access_token)
