@@ -16,10 +16,11 @@ const persistConfig = {
   key: 'redux-state',
   // 存储方式
   storage: storage,
-  // 黑名单
-  blacklist: [],
-  // 白名单
-  whitelist: ['user'],
+  // 白名单和黑名单配置一种就行
+  // 黑名单 --> reducer里不持久化的数据,除此外均为持久化数据,[]表示都持久化
+  blacklist: ['auth'],
+  // 白名单 --> reducer里持久化的数据,除此外均为不持久化数据
+  // whitelist: ['user'],
 }
 
 const persistReducerConfig = persistReducer(persistConfig, reducer)
