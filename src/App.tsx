@@ -3,6 +3,7 @@ import { HappyProvider } from '@ant-design/happy-work-theme'
 import RouterProvider from '@/routers'
 import { useSelector } from 'react-redux'
 import { RootState } from './redux'
+import { RefreshProvider } from '@/context/Refresh'
 
 const App: React.FC = () => {
   const { isDark, isHappy, compactAlgorithm, primary, borderRadius, componentSize } = useSelector(
@@ -29,7 +30,9 @@ const App: React.FC = () => {
     >
       <HappyProvider disabled={!isHappy}>
         <AppProvider>
-          <RouterProvider></RouterProvider>
+          <RefreshProvider>
+            <RouterProvider></RouterProvider>
+          </RefreshProvider>
         </AppProvider>
       </HappyProvider>
     </ConfigProvider>

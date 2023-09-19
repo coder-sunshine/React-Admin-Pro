@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { Dropdown, type MenuProps } from 'antd'
 import { IconFont } from '@/components/Icon'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons'
 import { removeTab, closeTabsOnSide, closeMultipleTab } from '@/redux/modules/tabs'
 import { setGlobalState } from '@/redux/modules/global'
+import { RefreshContext } from '@/context/Refresh'
 
 interface MoreButtonProps {
   path: string
@@ -26,8 +27,11 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const { updateOutletShow } = useContext(RefreshContext)
+
   const refreshCurrentPage = () => {
-    console.log('刷新')
+    updateOutletShow(false)
+    setTimeout(() => updateOutletShow(true))
   }
 
   const items: MenuProps['items'] = [
