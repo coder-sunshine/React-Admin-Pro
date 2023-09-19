@@ -34,19 +34,18 @@ const RouterGuard: React.FC<RouterGuardProps> = props => {
     // 白名单
     if (ROUTER_WHITE_LIST.includes(pathname)) return
 
-    // 如果没有token，重定向到登录页
-    if (!token) return navigate(LOGIN_URL, { replace: true })
+    const isLoginPage = pathname === LOGIN_URL
 
     // 如果在访问的页面上有菜单数据、令牌、去登录页面，则重定向到主页
-    if (authMenuList.length && token && pathname === LOGIN_URL) {
+    if (authMenuList.length && token && isLoginPage) {
       return navigate(HOME_URL)
     }
 
     // 如果没有菜单数据，没有令牌&&所访问的页面不是登录页面，重定向到登录页面
-    if (!authMenuList.length && !token && pathname !== LOGIN_URL) {
+    if ((!token && !isLoginPage) || (!authMenuList.length && !token && !isLoginPage)) {
       return navigate(LOGIN_URL, { replace: true })
     }
-  }, [JSON.stringify(loader), token])
+  }, [loader])
 
   return props.children as JSX.Element
 }
