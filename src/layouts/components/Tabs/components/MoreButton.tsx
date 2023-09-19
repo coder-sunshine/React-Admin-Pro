@@ -16,6 +16,7 @@ import {
 import { removeTab, closeTabsOnSide, closeMultipleTab } from '@/redux/modules/tabs'
 import { setGlobalState } from '@/redux/modules/global'
 import { RefreshContext } from '@/context/Refresh'
+import { useTranslation } from 'react-i18next'
 
 interface MoreButtonProps {
   path: string
@@ -27,6 +28,8 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const { t } = useTranslation()
+
   const { updateOutletShow } = useContext(RefreshContext)
 
   const refreshCurrentPage = () => {
@@ -37,13 +40,13 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <span>刷新</span>,
+      label: <span>{t('tabs.refresh')}</span>,
       icon: <ReloadOutlined style={style} />,
       onClick: refreshCurrentPage,
     },
     {
       key: '2',
-      label: <span>最大化</span>,
+      label: <span>{t('tabs.maximize')}</span>,
       icon: <ExpandOutlined style={style} />,
       onClick: () => dispatch(setGlobalState({ key: 'maximize', value: true })),
     },
@@ -53,19 +56,19 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
 
     {
       key: '3',
-      label: <span>关闭当前</span>,
+      label: <span>{t('tabs.closeCurrent')}</span>,
       icon: <CloseCircleOutlined style={style} />,
       onClick: () => dispatch(removeTab({ path, isCurrent: true })),
     },
     {
       key: '4',
-      label: <span>关闭左侧</span>,
+      label: <span>{t('tabs.closeLeft')}</span>,
       icon: <VerticalRightOutlined style={style} />,
       onClick: () => dispatch(closeTabsOnSide({ path, type: 'left' })),
     },
     {
       key: '5',
-      label: <span>关闭右侧</span>,
+      label: <span>{t('tabs.closeRight')}</span>,
       icon: <VerticalLeftOutlined style={style} />,
       onClick: () => dispatch(closeTabsOnSide({ path, type: 'right' })),
     },
@@ -74,13 +77,13 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
     },
     {
       key: '6',
-      label: <span>关闭其它</span>,
+      label: <span>{t('tabs.closeOther')}</span>,
       icon: <ColumnWidthOutlined style={style} />,
       onClick: () => dispatch(closeMultipleTab({ path })),
     },
     {
       key: '7',
-      label: <span>关闭所有</span>,
+      label: <span>{t('tabs.closeAll')}</span>,
       icon: <SwitcherOutlined style={style} />,
       onClick: () => {
         dispatch(closeMultipleTab({}))

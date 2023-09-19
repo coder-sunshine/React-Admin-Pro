@@ -4,6 +4,10 @@ declare global {
   interface Window {
     $navigate: NavigateFunction
   }
+
+  interface Navigator {
+    browserLanguage: string
+  }
 }
 
 export {}
