@@ -53,7 +53,7 @@ const BreadcrumbNav: React.FC = () => {
         // 如果子菜单有数据加下拉菜单
         if (items.length) {
           return {
-            dropdownProps: { arrow: { pointAtCenter: true } },
+            dropdownProps: { arrow: true },
             title: <a>{renderTitle(item, false)}</a>,
             menu: {
               items: items.map(child => {

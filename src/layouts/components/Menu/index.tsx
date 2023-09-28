@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 import { MetaProps, RouteObjectType } from '@/routers/interface'
 import type { MenuProps } from 'antd'
@@ -6,7 +7,6 @@ import { Icon } from '@/components/Icon'
 import { RootState, useSelector } from '@/redux'
 
 import './index.less'
-import { useEffect, useState } from 'react'
 
 interface LayoutMenuProps {
   mode: MenuProps['mode']

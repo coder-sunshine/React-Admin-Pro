@@ -5,6 +5,8 @@ import LayoutMenu from '../components/Menu'
 import logo from '@/assets/images/logo.svg'
 import { getFirstLevelMenuList } from '@/utils'
 
+import './index.less'
+
 const { Header } = Layout
 const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 

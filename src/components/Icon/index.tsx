@@ -9,6 +9,7 @@ interface IconProps {
 
 export const Icon: React.FC<IconProps> = React.memo(({ name, className }) => {
   const customIcons: { [key: string]: any } = Icons
+  if (!name) return null
   return React.createElement(customIcons[name], { className })
 })
 
