@@ -4,7 +4,7 @@ import { DEFAULT_PRIMARY } from '@/config'
 
 const globalState: GlobalState = {
   // 布局模式 (纵向：vertical | 经典：classic | 横向：transverse | 分栏：columns)
-  layout: 'classic',
+  layout: 'transverse',
   // antd 组件大小 ("small" | "middle" | "large")
   componentSize: 'middle',
   // antd 紧凑 主题
