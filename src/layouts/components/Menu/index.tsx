@@ -21,9 +21,9 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
   const { pathname } = useLocation()
 
   const { showMenuList } = useSelector((state: RootState) => state.auth)
+  const { isDark } = useSelector((state: RootState) => state.global)
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
-
   function getItem(
     label: React.ReactNode,
     key?: React.Key | null,
@@ -72,7 +72,19 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
     return handleMenuNavigation(key)
   }
 
-  return <Menu mode={mode} selectedKeys={selectedKeys} items={antdMenuList} onClick={clickMenu}></Menu>
+  const isDarkTheme = () => {
+    if (isDark) return true
+  }
+
+  return (
+    <Menu
+      theme={isDarkTheme() ? 'dark' : 'light'}
+      mode={mode}
+      selectedKeys={selectedKeys}
+      items={antdMenuList}
+      onClick={clickMenu}
+    ></Menu>
+  )
 }
 
 export default LayoutMenu

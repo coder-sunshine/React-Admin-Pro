@@ -15,9 +15,9 @@ const globalState: GlobalState = {
   language: null,
   // 当前页面是否全屏显示
   maximize: false,
-  // theme color
+  // 主题颜色
   primary: DEFAULT_PRIMARY,
-  // dark mode
+  // 暗黑模式
   isDark: true,
   // 灰色模式
   isGrey: false,
@@ -27,9 +27,9 @@ const globalState: GlobalState = {
   isHappy: true,
   // 拆分菜单
   menuSplit: true,
-  // sidebar Invert Color
+  // 侧边栏反转颜色
   siderInverted: false,
-  // head Inverted Color
+  // 头部反转颜色
   headerInverted: false,
   // 折叠菜单
   isCollapse: false,
