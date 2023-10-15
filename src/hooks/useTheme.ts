@@ -13,7 +13,7 @@ const useTheme = () => {
   // token 里面是预设css变量
   const { token } = theme.useToken()
 
-  const { isDark, borderRadius, primary, compactAlgorithm, siderInverted, headerInverted } = useSelector(
+  const { isDark, borderRadius, primary, compactAlgorithm, siderInverted, headerInverted, isGrey, isWeak } = useSelector(
     (state: RootState) => state.global
   )
 
@@ -42,6 +42,15 @@ const useTheme = () => {
         isDark ? `${getDarkColor(primary, i / 10)}` : `${getLightColor(primary, i / 10)}`
       )
     }
+  }
+
+  /**
+   * @description 切换 色弱 和 灰阶 模式
+   */
+  useEffect(() => changeGreyOrWeak(), [isGrey, isWeak])
+  const changeGreyOrWeak = () => {
+    const html = document.documentElement
+    html.style.filter = isWeak ? 'invert(80%)' : isGrey ? 'grayscale(1)' : ''
   }
 
   /**

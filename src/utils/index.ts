@@ -23,6 +23,15 @@ export function setStyleProperty(key: string, val: string) {
   document.documentElement.style.setProperty(key, val)
 }
 
+/**
+ * @description Convert a 3-digit HEX color code to a 6-digit code.
+ * @returns {String}
+ */
+export function convertToSixDigitHexColor(str: string) {
+  if (str.length > 4) return str.toLocaleUpperCase()
+  else return (str[0] + str[1] + str[1] + str[2] + str[2] + str[3] + str[3]).toLocaleUpperCase()
+}
+
 export function getFlatMenuList(menuList: RouteObjectType[]): RouteObjectType[] {
   let newMenuList: RouteObjectType[] = JSON.parse(JSON.stringify(menuList))
   return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])])
@@ -87,4 +96,20 @@ export function getBrowserLang() {
   if (['cn', 'zh', 'zh-cn'].includes(browserLang.toLowerCase())) defaultBrowserLang = 'zh'
   else defaultBrowserLang = 'en'
   return defaultBrowserLang
+}
+
+/**
+ * @description 获取需要展开的子菜单键。
+ * @param {String} path - 当前 path
+ * @returns {Array}
+ */
+export function getOpenKeys(path: string): string[] {
+  let currentKey: string = ''
+  let openKeys: string[] = []
+  let pathSegments: string[] = path.split('/').map((segment: string) => '/' + segment)
+  for (let i: number = 1; i < pathSegments.length - 1; i++) {
+    currentKey += pathSegments[i]
+    openKeys.push(currentKey)
+  }
+  return openKeys
 }

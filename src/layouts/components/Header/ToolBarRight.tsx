@@ -1,6 +1,7 @@
 import ComponentSize from './components/ComponentSize'
 import Language from './components/Language'
 import SearchMenu from './components/SearchMenu'
+import ThemeSetting from './components/ThemeSetting'
 import Message from './components/Message'
 import Fullscreen from './components/Fullscreen'
 import UserName from './components/UserName'
@@ -13,6 +14,7 @@ const ToolBarRight: React.FC = () => {
         <ComponentSize />
         <Language />
         <SearchMenu />
+        <ThemeSetting />
         <Message />
         <Fullscreen />
       </div>

@@ -1,6 +1,7 @@
 import { Layout } from 'antd'
 import { useLocation, useOutlet } from 'react-router-dom'
 import LayoutTabs from '../Tabs'
+import LayoutFooter from '@/layouts/components/Footer'
 import { createRef, useContext, useEffect } from 'react'
 import { RefreshContext } from '@/context/Refresh'
 import Maximize from './components/Maximize'
@@ -60,6 +61,7 @@ const LayoutMain: React.FC = () => {
           <Content ref={nodeRef}>{outletShow && outlet}</Content>
         </CSSTransition>
       </SwitchTransition>
+      <LayoutFooter />
     </>
   )
 }

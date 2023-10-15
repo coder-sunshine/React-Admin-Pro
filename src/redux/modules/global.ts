@@ -49,7 +49,7 @@ const globalState: GlobalState = {
   tabsDrag: true,
   // 页脚
   footer: true,
-  // theme box display status
+  // 主题配置
   themeDrawerVisible: false,
 }
 

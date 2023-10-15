@@ -5,15 +5,17 @@ import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
 import { Icon } from '@/components/Icon'
 import { RootState, useSelector } from '@/redux'
+import { getOpenKeys } from '@/utils'
 
 import './index.less'
 
 interface LayoutMenuProps {
   mode: MenuProps['mode']
   menuList?: RouteObjectType[]
+  menuSplit?: boolean
 }
 
-const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
+const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) => {
   type MenuItem = Required<MenuProps>['items'][number]
 
   const matches = useMatches()
@@ -21,9 +23,12 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
   const { pathname } = useLocation()
 
   const { showMenuList } = useSelector((state: RootState) => state.auth)
-  const { isDark } = useSelector((state: RootState) => state.global)
+  const { isDark, headerInverted, siderInverted, layout, accordion, isCollapse } = useSelector((state: RootState) => state.global)
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+  const [splitSelectedKeys, setSplitSelectedKeys] = useState<string[]>([])
+  const [openKeys, setOpenKeys] = useState<string[]>([])
+
   function getItem(
     label: React.ReactNode,
     key?: React.Key | null,
@@ -57,6 +62,13 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
     // 设置选中的key
     const path = meta?.activeMenu ?? pathname
     setSelectedKeys([path])
+    // 设置拆分选定键(find可以用来表示子键)
+    const splitPath = `/${path.split('/')[1]}`
+    const splitKeys = showMenuList.find(item => item.path === splitPath) ? splitPath : path
+    setSplitSelectedKeys([splitKeys])
+
+    // 使用setTimeout来防止菜单展开时出现样式异常
+    if (accordion) setTimeout(() => isCollapse || setOpenKeys(getOpenKeys(pathname)))
   }, [matches])
 
   const handleMenuNavigation = (path: string) => {
@@ -69,20 +81,42 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList }) => {
   }
 
   const clickMenu: MenuProps['onClick'] = ({ key }) => {
+    // 如果菜单没分割，直接跳转
+    if (!menuSplit) return handleMenuNavigation(key)
+
+    // 如果菜单分割，且点击的是第一级菜单，跳转到第一个子菜单
+    const children = showMenuList.find(item => item.path === key)?.children
+    if (children?.length) return handleMenuNavigation(children[0].path!)
+
     return handleMenuNavigation(key)
   }
 
+  const onOpenChange: MenuProps['onOpenChange'] = openKeys => {
+    if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(openKeys)
+    const latestOpenKey = openKeys[openKeys.length - 1]
+    if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys)
+    setOpenKeys([latestOpenKey])
+  }
+
+  const isClassicLayout = layout === 'classic'
+  const isTransverseLayout = layout === 'transverse'
+
   const isDarkTheme = () => {
     if (isDark) return true
+    if (headerInverted && isTransverseLayout) return true
+    if (headerInverted && isClassicLayout && menuSplit) return true
+    if (siderInverted && !isTransverseLayout && !menuSplit) return true
+    return false
   }
 
   return (
     <Menu
       theme={isDarkTheme() ? 'dark' : 'light'}
       mode={mode}
-      selectedKeys={selectedKeys}
+      selectedKeys={menuSplit ? splitSelectedKeys : selectedKeys}
       items={antdMenuList}
       onClick={clickMenu}
+      {...(!isTransverseLayout && accordion && { openKeys, onOpenChange })}
     ></Menu>
   )
 }
