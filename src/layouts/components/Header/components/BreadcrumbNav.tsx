@@ -5,7 +5,7 @@ import { MetaProps, RouteObjectType } from '@/routers/interface'
 import { getAllBreadcrumbList } from '@/utils'
 import { Breadcrumb } from 'antd'
 import { ItemType } from 'antd/es/breadcrumb/Breadcrumb'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useMatches } from 'react-router-dom'
 
 const BreadcrumbNav: React.FC = () => {
@@ -13,7 +13,7 @@ const BreadcrumbNav: React.FC = () => {
   const { breadcrumbIcon, breadcrumb } = useSelector((state: RootState) => state.global)
   const { authMenuList } = useSelector((state: RootState) => state.auth)
   // 获取全部的面包屑列表
-  const breadcrumbAllList = getAllBreadcrumbList(authMenuList)
+  const breadcrumbAllList = useMemo(() => getAllBreadcrumbList(authMenuList), [authMenuList])
 
   const [curBreadcrumbList, setCurBreadcrumbList] = useState<ItemType[]>([])
 
@@ -22,7 +22,7 @@ const BreadcrumbNav: React.FC = () => {
     const { icon, title } = item.meta || {}
     const content = (
       <>
-        <span className='mr5'>{breadcrumbIcon && <Icon name={icon!} />}</span>
+        {breadcrumbIcon && icon && <span className='mr5'>{<Icon name={icon!} />}</span>}
         <span>{title}</span>
       </>
     )
@@ -33,7 +33,7 @@ const BreadcrumbNav: React.FC = () => {
   useEffect(() => {
     // matches数组中的 data 返回的就是路由的 loader 信息
     const meta = matches[matches.length - 1].data as MetaProps
-    if (!meta.key) return
+    if (!meta?.key) return
 
     // 获取当前页面对应的面包屑 --> 数组最后一项就是当前菜单的面包屑
     let breadcrumbList = breadcrumbAllList[meta.key] || []
