@@ -5,6 +5,7 @@ import LayoutTransverse from './LayoutTransverse'
 import LayoutClassic from './LayoutClassic'
 import LayoutColumns from './LayoutColumns'
 import ThemeDrawer from '@/layouts/components/ThemeDrawer'
+import { Watermark } from 'antd'
 
 const LayoutIndex: React.FC = () => {
   const { layout } = useSelector((state: RootState) => state.global)
@@ -15,10 +16,14 @@ const LayoutIndex: React.FC = () => {
     columns: <LayoutColumns />,
   }
 
+  const { watermark } = useSelector((state: RootState) => state.global)
+
   return (
     <>
-      {LayoutComponents[layout]}
-      <ThemeDrawer />
+      <Watermark className='watermark-content' zIndex={1001} content={watermark ? ['React Admin', 'Happy Working'] : []}>
+        {LayoutComponents[layout]}
+        <ThemeDrawer />
+      </Watermark>
     </>
   )
 }
