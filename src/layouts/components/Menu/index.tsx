@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 import { MetaProps, RouteObjectType } from '@/routers/interface'
 import type { MenuProps } from 'antd'
@@ -55,7 +55,7 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
     })
   }
 
-  const antdMenuList = handleMenuAsAntdFormat(menuList ?? showMenuList)
+  const antdMenuList = useMemo(() => handleMenuAsAntdFormat(menuList ?? showMenuList), [menuList, showMenuList])
 
   useEffect(() => {
     const meta = matches[matches.length - 1].data as MetaProps
@@ -98,20 +98,20 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
     setOpenKeys([latestOpenKey])
   }
 
-  const isClassicLayout = layout === 'classic'
-  const isTransverseLayout = layout === 'transverse'
+  const isClassicLayout = useMemo(() => layout === 'classic', [layout])
+  const isTransverseLayout = useMemo(() => layout === 'transverse', [layout])
 
-  const isDarkTheme = () => {
+  const isDarkTheme = useMemo(() => {
     if (isDark) return true
     if (headerInverted && isTransverseLayout) return true
     if (headerInverted && isClassicLayout && menuSplit) return true
     if (siderInverted && !isTransverseLayout && !menuSplit) return true
     return false
-  }
+  }, [layout, isDark, headerInverted, siderInverted, menuSplit])
 
   return (
     <Menu
-      theme={isDarkTheme() ? 'dark' : 'light'}
+      theme={isDarkTheme ? 'dark' : 'light'}
       mode={mode}
       selectedKeys={menuSplit ? splitSelectedKeys : selectedKeys}
       items={antdMenuList}
