@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom'
 import LazyComponent from '@/components/Lazy'
 import { lazy } from 'react'
 import RouterGuard from './RouterGuard'
-import LayoutIndex from '@/layouts'
+// import LayoutIndex from '@/layouts'
+import LayoutIndexAsync from '@/layouts/indexAsync'
 
 // 导入views目录中的所有视图文件 --> Parameters 获取参数类型
 const modules = import.meta.glob('@/views/**/*.tsx') as Record<string, Parameters<typeof lazy>[number]>
@@ -40,7 +41,8 @@ export const convertToDynamicRouterFormat = (authMenuList: RouteObjectType[]) =>
     return item
   })
 
-  const dynamicRouter: RouteObjectType[] = [{ element: <LayoutIndex />, children: [] }]
+  // const dynamicRouter: RouteObjectType[] = [{ element: <LayoutIndex />, children: [] }]
+  const dynamicRouter: RouteObjectType[] = [{ element: <LayoutIndexAsync />, children: [] }]
 
   handleMenuList.forEach(item => {
     if (item.meta?.isFull) {
