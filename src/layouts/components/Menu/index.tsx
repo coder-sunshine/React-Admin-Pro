@@ -22,9 +22,8 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  const { showMenuList } = useSelector((state: RootState) => state.auth)
+  const { showMenuList, flatMenuList } = useSelector((state: RootState) => state.auth)
   const { isDark, headerInverted, siderInverted, layout, accordion, isCollapse } = useSelector((state: RootState) => state.global)
-
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [splitSelectedKeys, setSplitSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
@@ -72,7 +71,7 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
   }, [matches])
 
   const handleMenuNavigation = (path: string) => {
-    const menuItem = showMenuList.find(item => item.path === path)
+    const menuItem = flatMenuList.find(item => item.path === path)
     if (menuItem?.meta?.isFull) {
       window.open(menuItem.meta.isLink, '_blank')
     } else {
