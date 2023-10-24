@@ -10,8 +10,9 @@ import { Link, useMatches } from 'react-router-dom'
 
 const BreadcrumbNav: React.FC = () => {
   const matches = useMatches()
-  const { breadcrumbIcon, breadcrumb } = useSelector((state: RootState) => state.global)
-  const { authMenuList } = useSelector((state: RootState) => state.auth)
+  const authMenuList = useSelector((state: RootState) => state.auth.authMenuList)
+  const breadcrumb = useSelector((state: RootState) => state.global.breadcrumb)
+  const breadcrumbIcon = useSelector((state: RootState) => state.global.breadcrumbIcon)
   // 获取全部的面包屑列表
   const breadcrumbAllList = useMemo(() => getAllBreadcrumbList(authMenuList), [authMenuList])
 

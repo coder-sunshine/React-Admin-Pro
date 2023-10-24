@@ -19,8 +19,8 @@ const RouterProvider: React.FC = () => {
   useMessage()
 
   const { initPermissions } = usePermissions()
-  const { token } = useSelector((state: RootState) => state.user)
-  const { authMenuList } = useSelector((state: RootState) => state.auth)
+  const token = useSelector((state: RootState) => state.user.token)
+  const authMenuList = useSelector((state: RootState) => state.auth.authMenuList)
 
   const [routerList, setRouterList] = useState<RouteObjectType[]>(wrappedStaticRouter)
 

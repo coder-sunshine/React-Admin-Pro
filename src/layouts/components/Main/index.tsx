@@ -24,8 +24,9 @@ const LayoutMain: React.FC = () => {
   const { pathname } = useLocation()
   const outlet = useOutlet()
   const { outletShow } = useContext(RefreshContext)
-  const { maximize, isCollapse } = useSelector((state: RootState) => state.global)
-  const { flatMenuList } = useSelector((state: RootState) => state.auth)
+  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
+  const maximize = useSelector((state: RootState) => state.global.maximize)
+  const flatMenuList = useSelector((state: RootState) => state.auth.flatMenuList)
 
   // 监听窗口变化，动态设置菜单栏关闭与否
   const { run } = useDebounceFn(
@@ -48,6 +49,7 @@ const LayoutMain: React.FC = () => {
   }, [maximize])
 
   // Solve the transition animation that causes useEffect to execute multiple times
+  // 解决导致useEffect多次执行的过渡动画
   // @see: http://reactcommunity.org/react-transition-group/with-react-router
   const menuList: RouteTypeWithNodeRef[] = flatMenuList.map(item => ({ ...item, nodeRef: createRef() }))
   const { nodeRef } = menuList.find(route => route.path === pathname) ?? {}

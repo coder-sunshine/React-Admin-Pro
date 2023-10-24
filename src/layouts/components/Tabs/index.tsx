@@ -44,9 +44,11 @@ const LayoutTabs: React.FC = () => {
   const location = useLocation()
   const path = location.pathname + location.search
 
-  const { tabs, tabsIcon, tabsDrag } = useSelector((state: RootState) => state.global)
-  const { tabsList } = useSelector((state: RootState) => state.tabs)
-  const { flatMenuList } = useSelector((state: RootState) => state.auth)
+  const tabs = useSelector((state: RootState) => state.global.tabs)
+  const tabsIcon = useSelector((state: RootState) => state.global.tabsIcon)
+  const tabsDrag = useSelector((state: RootState) => state.global.tabsDrag)
+  const tabsList = useSelector((state: RootState) => state.tabs.tabsList)
+  const flatMenuList = useSelector((state: RootState) => state.auth.flatMenuList)
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   useEffect(() => initTabs(), [])

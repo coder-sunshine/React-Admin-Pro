@@ -4,7 +4,7 @@ import { setGlobalState } from '@/redux/modules/global'
 const Maximize: React.FC = () => {
   const dispatch = useDispatch()
 
-  const { maximize } = useSelector((state: RootState) => state.global)
+  const maximize = useSelector((state: RootState) => state.global.maximize)
 
   return (
     <>

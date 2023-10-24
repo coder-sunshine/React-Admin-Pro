@@ -17,8 +17,9 @@ const { Header, Sider } = Layout
 const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 
 const LayoutClassic: React.FC = () => {
-  const { isCollapse, menuSplit } = useSelector((state: RootState) => state.global)
-  const { showMenuList } = useSelector((state: RootState) => state.auth)
+  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
+  const menuSplit = useSelector((state: RootState) => state.global.menuSplit)
+  const showMenuList = useSelector((state: RootState) => state.auth.showMenuList)
   // 获取所有第一级菜单 --> 用于拆分菜单
   const firstLevelMenuList = getFirstLevelMenuList(showMenuList)
 

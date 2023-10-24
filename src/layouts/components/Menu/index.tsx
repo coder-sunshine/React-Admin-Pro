@@ -6,6 +6,7 @@ import { Menu } from 'antd'
 import { Icon } from '@/components/Icon'
 import { RootState, useSelector } from '@/redux'
 import { getOpenKeys } from '@/utils'
+import { shallowEqual } from 'react-redux'
 
 import './index.less'
 
@@ -22,8 +23,19 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  const { showMenuList, flatMenuList } = useSelector((state: RootState) => state.auth)
-  const { isDark, headerInverted, siderInverted, layout, accordion, isCollapse } = useSelector((state: RootState) => state.global)
+  const { layout, isDark, accordion, isCollapse, siderInverted, headerInverted, showMenuList, flatMenuList } = useSelector(
+    (state: RootState) => ({
+      layout: state.global.layout,
+      isDark: state.global.isDark,
+      accordion: state.global.accordion,
+      isCollapse: state.global.isCollapse,
+      siderInverted: state.global.siderInverted,
+      headerInverted: state.global.headerInverted,
+      showMenuList: state.auth.showMenuList,
+      flatMenuList: state.auth.flatMenuList,
+    }),
+    shallowEqual
+  )
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [splitSelectedKeys, setSplitSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])

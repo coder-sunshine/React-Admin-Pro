@@ -5,7 +5,7 @@ import type { SizeType } from 'antd/es/config-provider/SizeContext'
 
 const ComponentSize: React.FC = () => {
   const dispatch = useDispatch()
-  const { componentSize } = useSelector((state: RootState) => state.global)
+  const componentSize = useSelector((state: RootState) => state.global.componentSize)
 
   const setComponentSize: MenuProps['onClick'] = val => {
     dispatch(setGlobalState({ key: 'componentSize', value: val.key as SizeType }))

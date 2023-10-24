@@ -17,8 +17,8 @@ const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 const LayoutColumns: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { isCollapse } = useSelector((state: RootState) => state.global)
-  const { showMenuList } = useSelector((state: RootState) => state.auth)
+  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
+  const showMenuList = useSelector((state: RootState) => state.auth.showMenuList)
 
   const [menuActive, setMenuActive] = useState('')
   const [subMenuList, setSubMenuList] = useState<RouteObjectType[]>([])

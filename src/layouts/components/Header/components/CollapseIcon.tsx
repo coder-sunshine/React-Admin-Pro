@@ -5,7 +5,7 @@ import { setGlobalState } from '@/redux/modules/global'
 
 const CollapseIcon: React.FC = () => {
   const dispatch = useDispatch()
-  const { isCollapse } = useSelector((state: RootState) => state.global)
+  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
   return (
     <>
       {React.createElement(isCollapse ? MenuUnfoldOutlined : MenuFoldOutlined, {

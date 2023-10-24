@@ -6,7 +6,8 @@ import { Watermark } from 'antd'
 import LazyComponent from '@/components/Lazy'
 
 const LayoutIndexAsync: React.FC = () => {
-  const { layout } = useSelector((state: RootState) => state.global)
+  const layout = useSelector((state: RootState) => state.global.layout)
+  const watermark = useSelector((state: RootState) => state.global.watermark)
 
   const LayoutComponents: Record<LayoutType, React.LazyExoticComponent<React.ComponentType>> = {
     vertical: React.lazy(() => import('./LayoutVertical')),
@@ -14,8 +15,6 @@ const LayoutIndexAsync: React.FC = () => {
     transverse: React.lazy(() => import('./LayoutTransverse')),
     columns: React.lazy(() => import('./LayoutColumns')),
   }
-
-  const { watermark } = useSelector((state: RootState) => state.global)
 
   return (
     <>

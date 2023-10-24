@@ -1,7 +1,7 @@
 import { App as AppProvider, theme, ConfigProvider } from 'antd'
 import { HappyProvider } from '@ant-design/happy-work-theme'
 import RouterProvider from '@/routers'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { RootState, useDispatch } from './redux'
 import { RefreshProvider } from '@/context/Refresh'
 import { I18nextProvider } from 'react-i18next'
@@ -15,8 +15,17 @@ import { LanguageType } from './redux/interface'
 const App: React.FC = () => {
   const dispatch = useDispatch()
 
-  const { isDark, isHappy, compactAlgorithm, primary, borderRadius, componentSize, language } = useSelector(
-    (state: RootState) => state.global
+  const { isDark, primary, isHappy, componentSize, compactAlgorithm, borderRadius, language } = useSelector(
+    (state: RootState) => ({
+      isDark: state.global.isDark,
+      primary: state.global.primary,
+      isHappy: state.global.isHappy,
+      componentSize: state.global.componentSize,
+      compactAlgorithm: state.global.compactAlgorithm,
+      borderRadius: state.global.borderRadius,
+      language: state.global.language,
+    }),
+    shallowEqual
   )
 
   // 初始化 主题 算法

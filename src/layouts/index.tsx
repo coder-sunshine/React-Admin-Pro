@@ -8,15 +8,15 @@ import ThemeDrawer from '@/layouts/components/ThemeDrawer'
 import { Watermark } from 'antd'
 
 const LayoutIndex: React.FC = () => {
-  const { layout } = useSelector((state: RootState) => state.global)
+  const layout = useSelector((state: RootState) => state.global.layout)
+  const watermark = useSelector((state: RootState) => state.global.watermark)
+
   const LayoutComponents: Record<LayoutType, JSX.Element> = {
     vertical: <LayoutVertical />,
     classic: <LayoutClassic />,
     transverse: <LayoutTransverse />,
     columns: <LayoutColumns />,
   }
-
-  const { watermark } = useSelector((state: RootState) => state.global)
 
   return (
     <>

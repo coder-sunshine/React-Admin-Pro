@@ -13,7 +13,7 @@ const { Sider, Header } = Layout
 const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 
 const LayoutVertical: React.FC = () => {
-  const { isCollapse } = useSelector((state: RootState) => state.global)
+  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
 
   return (
     <section className='layout-vertical'>
