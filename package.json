@@ -15,7 +15,7 @@
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "prepare": "husky install",
-    "commit": "czg && git push",
+    "commit": "czg",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
