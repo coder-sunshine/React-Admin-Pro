@@ -98,6 +98,21 @@
     "vite-plugin-stylelint": "^5.0.0",
     "vite-plugin-svg-icons": "^2.0.1"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-git"
