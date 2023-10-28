@@ -14,6 +14,7 @@
     "lint:eslint": "eslint --fix --ext .js,.ts,.tsx ./src",
     "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,scss,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+    "lint:lint-staged": "lint-staged",
     "prepare": "husky install",
     "commit": "czg",
     "preinstall": "npx only-allow pnpm"
@@ -96,15 +97,6 @@
     "vite-plugin-pwa": "^0.16.4",
     "vite-plugin-stylelint": "^5.0.0",
     "vite-plugin-svg-icons": "^2.0.1"
-  },
-  "lint-staged": {
-    "*.{css,less,scss}": [
-      "pnpm lint:stylelint"
-    ],
-    "*.{js,jsx,ts,tsx}": [
-      "pnpm lint:eslint",
-      "pnpm lint:prettier"
-    ]
   },
   "config": {
     "commitizen": {
