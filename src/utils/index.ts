@@ -1,4 +1,7 @@
+import { store } from '@/redux'
 import { RouteObjectType } from '@/routers/interface'
+
+const mode = import.meta.env.VITE_ROUTER_MODE
 
 /**
  * @description 获取当前时间对应的问候语
@@ -112,4 +115,35 @@ export function getOpenKeys(path: string): string[] {
     openKeys.push(currentKey)
   }
   return openKeys
+}
+
+/**
+ * @description 用params获取相对url
+ * @returns {String}
+ */
+export function getUrlWithParams() {
+  console.log('name', location)
+  const url = {
+    hash: location.hash.substring(1),
+    history: location.pathname + location.search,
+  }
+  return url[mode]
+}
+
+/**
+ * @description 获取一个带有路径的菜单对象
+ * @param {Array} menulist - 要搜索的菜单对象列表。
+ * @param {string} path - 与菜单对象的路径相匹配的路径。
+ * @returns {Object} 匹配的菜单对象，如果没有找到匹配，则为空。
+ */
+export function getMenuByPath(
+  menulist: RouteObjectType[] = store.getState().auth.flatMenuList,
+  path: string = getUrlWithParams()
+) {
+  const menuItem = menulist.find(menu => {
+    // 匹配通过规则的动态路由
+    const regex = new RegExp(`^${menu.path?.replace(/:.[^/]*/, '.*')}$`)
+    return regex.test(path)
+  })
+  return menuItem || {}
 }
