@@ -122,7 +122,6 @@ export function getOpenKeys(path: string): string[] {
  * @returns {String}
  */
 export function getUrlWithParams() {
-  console.log('name', location)
   const url = {
     hash: location.hash.substring(1),
     history: location.pathname + location.search,

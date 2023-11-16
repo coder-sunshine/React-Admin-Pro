@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { TabsListProp, TabsState } from '../interface'
+import { getUrlWithParams } from '@/utils'
 
 const tabsState: TabsState = {
   tabsList: [],
@@ -45,9 +46,17 @@ const tabsSlice = createSlice({
         return item.path === payload.path || !item.closable
       })
     },
+    setTabTitle(state, { payload }: PayloadAction<string>) {
+      state.tabsList = state.tabsList.map(item => {
+        if (item.path == getUrlWithParams()) {
+          return { ...item, title: payload }
+        }
+        return item
+      })
+    },
   },
 })
 
-export const { setTabsList, addTab, removeTab, closeTabsOnSide, closeMultipleTab } = tabsSlice.actions
+export const { setTabsList, addTab, removeTab, closeTabsOnSide, closeMultipleTab, setTabTitle } = tabsSlice.actions
 
 export default tabsSlice.reducer
