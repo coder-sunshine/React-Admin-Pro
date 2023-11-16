@@ -21,7 +21,7 @@ export const convertToDynamicRouterFormat = (authMenuList: RouteObjectType[]) =>
 
   const handleMenuList = flatMenuList.map(item => {
     // 需要把 children 删除，因为已经是扁平化路由了
-    if (item.redirect) delete item.children
+    if (item.children) delete item.children
 
     // 处理重定向
     if (item.redirect) item.element = <Navigate to={item.redirect} />
