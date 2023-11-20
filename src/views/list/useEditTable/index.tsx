@@ -127,6 +127,7 @@ const UseEditTable: React.FC = () => {
       align: 'center',
       render: (_text, record, _, action) => [
         <a
+          style={{ flex: 1 }}
           key='editable'
           onClick={() => {
             action?.startEditable?.(record.id)
@@ -135,6 +136,7 @@ const UseEditTable: React.FC = () => {
           编辑
         </a>,
         <a
+          style={{ flex: 1 }}
           key='delete'
           onClick={() => {
             setDataSource(dataSource.filter(item => item.id !== record.id))
