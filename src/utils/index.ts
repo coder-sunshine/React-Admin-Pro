@@ -1,5 +1,7 @@
+import { ResPage } from '@/api/interface'
 import { store } from '@/redux'
 import { RouteObjectType } from '@/routers/interface'
+import { RequestData } from '@ant-design/pro-components'
 
 const mode = import.meta.env.VITE_ROUTER_MODE
 
@@ -145,4 +147,17 @@ export function getMenuByPath(
     return regex.test(path)
   })
   return menuItem || {}
+}
+
+/**
+ * @description 格式化服务器为ProTable组件返回的数据。
+ * @param {Object} data - 服务器返回的数据。
+ * @returns {Object}
+ */
+export function formatDataForProTable<T>(data: ResPage<T>): Partial<RequestData<T>> {
+  return {
+    success: true,
+    data: data.list,
+    total: data.total,
+  }
 }

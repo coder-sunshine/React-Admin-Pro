@@ -22,6 +22,7 @@
   "dependencies": {
     "@ant-design/happy-work-theme": "^1.0.0",
     "@ant-design/icons": "^5.2.5",
+    "@ant-design/pro-components": "^2.6.41",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@dnd-kit/utilities": "^3.2.1",
