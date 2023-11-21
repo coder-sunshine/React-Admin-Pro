@@ -30,7 +30,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     define: {
       // 定义全局常量替换方式。其中每项在开发环境下会被定义在全局，而在构建时被静态替换。
       // 为了与 esbuild 的行为保持一致，表达式必须为一个 JSON 对象（null、boolean、number、string、数组或对象），亦或是一个单独的标识符。
-      __APP_INFO__: JSON.stringify({ __APP_INFO__ }),
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
     server: {
       host: '0.0.0.0',
