@@ -7,8 +7,6 @@ const style = { width: '280px' }
 
 const About: React.FC = () => {
   const { pkg, lastBuildTime } = __APP_INFO__
-  console.log('__APP_INFO__', __APP_INFO__)
-  console.log('pkg', pkg)
   const { dependencies, devDependencies, version } = pkg
 
   return (
