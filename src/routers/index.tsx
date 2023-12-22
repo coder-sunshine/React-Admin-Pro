@@ -3,7 +3,6 @@ import type { RouteObject } from 'react-router-dom'
 import type { RouteObjectType } from './interface'
 import { wrappedStaticRouter } from './modules/staticRouter'
 import useMessage from '@/hooks/useMessage'
-
 import { useEffect, useState } from 'react'
 import NotFound from '@/components/Error/404'
 import useTheme from '@/hooks/useTheme'
