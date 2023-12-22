@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { RootState, useDispatch, useSelector } from '@/redux'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 import { Tabs } from 'antd'
+import { useUpdateEffect } from 'ahooks'
 import { DndContext, PointerSensor, useSensor, type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove, horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -69,7 +70,7 @@ const LayoutTabs: React.FC = () => {
     })
   }
   // 监听路由变化
-  useEffect(() => {
+  useUpdateEffect(() => {
     const meta = matches[matches.length - 1].data as MetaProps & { redirect: boolean }
     if (!meta?.redirect) {
       const tabValue = {
