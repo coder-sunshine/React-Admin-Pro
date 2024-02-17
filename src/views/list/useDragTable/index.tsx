@@ -26,7 +26,9 @@ const data = [
 const UseDragTable: React.FC = () => {
   const [dataSource, setDataSource] = useState(data)
 
-  const handleDragSortEnd = (newDataSource: any) => {
+  const handleDragSortEnd = (beforeIndex: number, afterIndex: number, newDataSource: any) => {
+    console.log('beforeIndex', beforeIndex)
+    console.log('afterIndex', afterIndex)
     console.log('排序后的数据', newDataSource)
     setDataSource(newDataSource)
     message.success('修改列表排序成功')
