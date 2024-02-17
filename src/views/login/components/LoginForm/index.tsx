@@ -4,25 +4,25 @@ import type { FormProps } from 'antd/es/form'
 import { UserOutlined, LockOutlined, CloseCircleOutlined, CheckCircleFilled } from '@ant-design/icons'
 import { message, notification } from '@/hooks/useMessage'
 import { loginApi } from '@/api/modules/login'
-import md5 from 'md5'
-import { useDispatch } from '@/redux'
-import { setToken } from '@/redux/modules/user'
+import { useTabsStore, useUserStore } from '@/stores'
 import { getTimeState } from '@/utils'
 import { useNavigate } from 'react-router-dom'
 import { HOME_URL } from '@/config'
 import usePermissions from '@/hooks/usePermissions'
-import { setTabsList } from '@/redux/modules/tabs'
+import md5 from 'md5'
+
+type FieldType = {
+  username: string
+  password: string
+}
 
 const LoginForm: React.FC = () => {
-  type FieldType = {
-    username: string
-    password: string
-  }
+  const navigate = useNavigate()
 
   const [formInstance] = Form.useForm()
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const setToken = useUserStore(state => state.setToken)
+  const setTabsList = useTabsStore(state => state.setTabsList)
 
   const { initPermissions } = usePermissions()
 
@@ -34,10 +34,10 @@ const LoginForm: React.FC = () => {
       message.open({ type: 'loading', content: '登录中...' })
 
       const { data } = await loginApi({ ...values, password: md5(values.password) })
-      dispatch(setToken(data.access_token))
+      setToken(data.access_token)
 
       // 清除tabs
-      dispatch(setTabsList([]))
+      setTabsList([])
 
       // 设置权限
       await initPermissions(data.access_token)

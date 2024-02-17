@@ -1,11 +1,10 @@
-import { useDispatch } from '@/redux'
-import { setGlobalState } from '@/redux/modules/global'
+import { useGlobalStore } from '@/stores'
 
 const ThemeSetting: React.FC = () => {
-  const dispatch = useDispatch()
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
 
   const setThemeDrawerVisible = () => {
-    dispatch(setGlobalState({ key: 'themeDrawerVisible', value: true }))
+    setGlobalState('themeDrawerVisible', true)
   }
 
   return <i className='iconfont icon-zhuti' onClick={setThemeDrawerVisible}></i>

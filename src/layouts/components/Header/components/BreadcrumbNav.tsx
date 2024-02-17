@@ -1,6 +1,6 @@
 import { Icon } from '@/components/Icon'
 import { HOME_URL } from '@/config'
-import { RootState, useSelector } from '@/redux'
+import { useGlobalStore, useAuthStore } from '@/stores'
 import { MetaProps, RouteObjectType } from '@/routers/interface'
 import { getAllBreadcrumbList } from '@/utils'
 import { Breadcrumb } from 'antd'
@@ -10,9 +10,9 @@ import { Link, useMatches } from 'react-router-dom'
 
 const BreadcrumbNav: React.FC = () => {
   const matches = useMatches()
-  const authMenuList = useSelector((state: RootState) => state.auth.authMenuList)
-  const breadcrumb = useSelector((state: RootState) => state.global.breadcrumb)
-  const breadcrumbIcon = useSelector((state: RootState) => state.global.breadcrumbIcon)
+  const authMenuList = useAuthStore(state => state.authMenuList)
+  const breadcrumb = useGlobalStore(state => state.breadcrumb)
+  const breadcrumbIcon = useGlobalStore(state => state.breadcrumbIcon)
   // 获取全部的面包屑列表
   const breadcrumbAllList = useMemo(() => getAllBreadcrumbList(authMenuList), [authMenuList])
 

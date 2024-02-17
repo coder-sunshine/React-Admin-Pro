@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
-import { RootState, useSelector } from '@/redux'
 import { theme } from 'antd'
+import { setStyleProperty } from '@/utils'
+import { getLightColor, getDarkColor } from '@/utils/color'
+import { useGlobalStore } from '@/stores'
 import globalTheme from '@/styles/theme/global'
 import siderTheme from '@/styles/theme/sider'
 import headerTheme from '@/styles/theme/header'
-import { setStyleProperty } from '@/utils'
-import { getLightColor, getDarkColor } from '@/utils/color'
-import { shallowEqual } from 'react-redux'
 
 type ThemeType = 'light' | 'inverted' | 'dark'
 
@@ -14,18 +13,17 @@ const useTheme = () => {
   // token 里面是预设css变量
   const { token } = theme.useToken()
 
-  const { isDark, primary, isGrey, isWeak, borderRadius, compactAlgorithm, siderInverted, headerInverted } = useSelector(
-    (state: RootState) => ({
-      isDark: state.global.isDark,
-      primary: state.global.primary,
-      isGrey: state.global.isGrey,
-      isWeak: state.global.isWeak,
-      borderRadius: state.global.borderRadius,
-      compactAlgorithm: state.global.compactAlgorithm,
-      siderInverted: state.global.siderInverted,
-      headerInverted: state.global.headerInverted,
-    }),
-    shallowEqual
+  const { isDark, primary, isGrey, isWeak, compactAlgorithm, borderRadius, siderInverted, headerInverted } = useGlobalStore(
+    state => ({
+      isDark: state.isDark,
+      primary: state.primary,
+      isGrey: state.isGrey,
+      isWeak: state.isWeak,
+      compactAlgorithm: state.compactAlgorithm,
+      borderRadius: state.borderRadius,
+      siderInverted: state.siderInverted,
+      headerInverted: state.headerInverted,
+    })
   )
 
   // 切换暗黑模式

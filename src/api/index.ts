@@ -6,8 +6,7 @@ import { message } from '@/hooks/useMessage'
 import { LOGIN_URL } from '@/config'
 import { checkStatus } from './helper/checkStatus'
 import { ResultData } from './interface'
-import { store } from '@/redux'
-import { setToken } from '@/redux/modules/user'
+import { useUserStore } from '@/stores'
 
 // 拓展 AxiosRequestConfig 接口
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -39,7 +38,7 @@ class RequestHttp {
         // 当前请求不需要显示 loading，在 api 服务中通过指定的第三个参数: { noLoading: true } 来控制
         config.loading && showFullScreenLoading()
         if (config.headers && typeof config.headers.set === 'function') {
-          const token = store.getState().user.token
+          const token = useUserStore.getState().token
           config.headers.set('x-access-token', token)
         }
         return config
@@ -59,7 +58,7 @@ class RequestHttp {
         tryHideFullScreenLoading()
         if (data.code === ResultEnum.OVERDUE) {
           // token过期
-          store.dispatch(setToken(''))
+          useUserStore.getState().setToken('')
           message.error(data.msg)
           // 跳转到登录页面
           window.$navigate(LOGIN_URL)

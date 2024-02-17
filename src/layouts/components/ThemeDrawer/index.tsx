@@ -1,5 +1,4 @@
-import { RootState, useDispatch, useSelector } from '@/redux'
-import { setGlobalState } from '@/redux/modules/global'
+import { useGlobalStore } from '@/stores'
 import { CheckCircleFilled, FireOutlined, LayoutOutlined, QuestionCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import { Divider, Drawer, InputNumber, Popover, Switch, Tooltip } from 'antd'
 import ColorPicker from './components/ColorPicker'
@@ -9,19 +8,17 @@ import './index.less'
 const NODE_ENV = import.meta.env.VITE_USER_NODE_ENV
 
 const ThemeDrawer: React.FC = () => {
-  const dispatch = useDispatch()
   const {
-    themeDrawerVisible,
     layout,
-    menuSplit,
-    siderInverted,
-    headerInverted,
+    compactAlgorithm,
+    borderRadius,
     isDark,
     isGrey,
     isWeak,
-    compactAlgorithm,
     isHappy,
-    borderRadius,
+    menuSplit,
+    siderInverted,
+    headerInverted,
     isCollapse,
     accordion,
     watermark,
@@ -31,7 +28,10 @@ const ThemeDrawer: React.FC = () => {
     tabsIcon,
     tabsDrag,
     footer,
-  } = useSelector((state: RootState) => state.global)
+    themeDrawerVisible,
+    setGlobalState,
+  } = useGlobalStore()
+
   return (
     <Drawer
       title='主题配置'
@@ -39,7 +39,7 @@ const ThemeDrawer: React.FC = () => {
       zIndex={999}
       closable={false}
       open={themeDrawerVisible}
-      onClose={() => dispatch(setGlobalState({ key: 'themeDrawerVisible', value: false }))}
+      onClose={() => setGlobalState('themeDrawerVisible', false)}
       className='theme-drawer'
     >
       {/* 布局切换 */}
@@ -51,7 +51,7 @@ const ThemeDrawer: React.FC = () => {
         <Tooltip placement='top' title='纵向' arrow={true} mouseEnterDelay={0.2}>
           <div
             className={`layout-item mb22 layout-vertical ${layout === 'vertical' && 'layout-active'}`}
-            onClick={() => dispatch(setGlobalState({ key: 'layout', value: 'vertical' }))}
+            onClick={() => setGlobalState('layout', 'vertical')}
           >
             <div className='layout-dark'></div>
             <div className='layout-container'>
@@ -64,7 +64,7 @@ const ThemeDrawer: React.FC = () => {
         <Tooltip placement='top' title='经典' arrow={true} mouseEnterDelay={0.2}>
           <div
             className={`layout-item mb22 layout-classic ${layout === 'classic' && 'layout-active'}`}
-            onClick={() => dispatch(setGlobalState({ key: 'layout', value: 'classic' }))}
+            onClick={() => setGlobalState('layout', 'classic')}
           >
             <div className='layout-dark'></div>
             <div className='layout-container'>
@@ -77,7 +77,7 @@ const ThemeDrawer: React.FC = () => {
         <Tooltip placement='top' title='横向' arrow={true} mouseEnterDelay={0.2}>
           <div
             className={`layout-item layout-transverse ${layout === 'transverse' && 'layout-active'}`}
-            onClick={() => dispatch(setGlobalState({ key: 'layout', value: 'transverse' }))}
+            onClick={() => setGlobalState('layout', 'transverse')}
           >
             <div className='layout-dark'></div>
             <div className='layout-content'></div>
@@ -87,7 +87,7 @@ const ThemeDrawer: React.FC = () => {
         <Tooltip placement='top' title='分栏' arrow={true} mouseEnterDelay={0.2}>
           <div
             className={`layout-item layout-columns ${layout === 'columns' && 'layout-active'}`}
-            onClick={() => dispatch(setGlobalState({ key: 'layout', value: 'columns' }))}
+            onClick={() => setGlobalState('layout', 'columns')}
           >
             <div className='layout-dark'></div>
             <div className='layout-light'></div>
@@ -103,11 +103,7 @@ const ThemeDrawer: React.FC = () => {
             <QuestionCircleOutlined />
           </Tooltip>
         </span>
-        <Switch
-          disabled={layout !== 'classic'}
-          checked={menuSplit}
-          onChange={value => dispatch(setGlobalState({ key: 'menuSplit', value }))}
-        />
+        <Switch disabled={layout !== 'classic'} checked={menuSplit} onChange={value => setGlobalState('menuSplit', value)} />
       </div>
       <div className='theme-item'>
         <span>
@@ -116,7 +112,7 @@ const ThemeDrawer: React.FC = () => {
             <QuestionCircleOutlined />
           </Tooltip>
         </span>
-        <Switch checked={siderInverted} onChange={value => dispatch(setGlobalState({ key: 'siderInverted', value }))} />
+        <Switch checked={siderInverted} onChange={value => setGlobalState('siderInverted', value)} />
       </div>
       <div className='theme-item mb35'>
         <span>
@@ -125,7 +121,7 @@ const ThemeDrawer: React.FC = () => {
             <QuestionCircleOutlined />
           </Tooltip>
         </span>
-        <Switch checked={headerInverted} onChange={value => dispatch(setGlobalState({ key: 'headerInverted', value }))} />
+        <Switch checked={headerInverted} onChange={value => setGlobalState('headerInverted', value)} />
       </div>
 
       {/* 主题设置 */}
@@ -145,7 +141,7 @@ const ThemeDrawer: React.FC = () => {
           checked={isDark}
           checkedChildren={<span className='dark-icon dark-icon-sun'>🌞</span>}
           unCheckedChildren={<span className='dark-icon dark-icon-moon'>🌛</span>}
-          onChange={value => dispatch(setGlobalState({ key: 'isDark', value }))}
+          onChange={value => setGlobalState('isDark', value)}
         />
       </div>
       <div className='theme-item'>
@@ -153,8 +149,8 @@ const ThemeDrawer: React.FC = () => {
         <Switch
           checked={isGrey}
           onChange={value => {
-            if (isWeak) dispatch(setGlobalState({ key: 'isWeak', value: false }))
-            dispatch(setGlobalState({ key: 'isGrey', value }))
+            if (isWeak) setGlobalState('isWeak', false)
+            setGlobalState('isGrey', value)
           }}
         />
       </div>
@@ -163,18 +159,18 @@ const ThemeDrawer: React.FC = () => {
         <Switch
           checked={isWeak}
           onChange={value => {
-            if (isGrey) dispatch(setGlobalState({ key: 'isGrey', value: false }))
-            dispatch(setGlobalState({ key: 'isWeak', value }))
+            if (isGrey) setGlobalState('isGrey', false)
+            setGlobalState('isWeak', value)
           }}
         />
       </div>
       <div className='theme-item'>
         <span>快乐模式</span>
-        <Switch checked={isHappy} onChange={value => dispatch(setGlobalState({ key: 'isHappy', value }))} />
+        <Switch checked={isHappy} onChange={value => setGlobalState('isHappy', value)} />
       </div>
       <div className='theme-item'>
         <span>紧凑主题</span>
-        <Switch checked={compactAlgorithm} onChange={value => dispatch(setGlobalState({ key: 'compactAlgorithm', value }))} />
+        <Switch checked={compactAlgorithm} onChange={value => setGlobalState('compactAlgorithm', value)} />
       </div>
       <div className='theme-item mb35'>
         <span>圆角大小</span>
@@ -187,7 +183,7 @@ const ThemeDrawer: React.FC = () => {
           parser={value => (value ? value!.replace('px', '') : 6) as number}
           onChange={value => {
             const newValue = value || 6
-            dispatch(setGlobalState({ key: 'borderRadius', value: newValue }))
+            setGlobalState('borderRadius', newValue)
           }}
         />
       </div>
@@ -199,43 +195,43 @@ const ThemeDrawer: React.FC = () => {
       </Divider>
       <div className='theme-item'>
         <span>菜单折叠</span>
-        <Switch checked={isCollapse} onChange={value => dispatch(setGlobalState({ key: 'isCollapse', value }))} />
+        <Switch checked={isCollapse} onChange={value => setGlobalState('isCollapse', value)} />
       </div>
       <div className='theme-item'>
         <span>菜单手风琴</span>
-        <Switch checked={accordion} onChange={value => dispatch(setGlobalState({ key: 'accordion', value }))} />
+        <Switch checked={accordion} onChange={value => setGlobalState('accordion', value)} />
       </div>
       <div className='theme-item'>
         <span>水印</span>
         <Switch
           checked={watermark}
           disabled={NODE_ENV !== 'development'}
-          onChange={value => dispatch(setGlobalState({ key: 'watermark', value }))}
+          onChange={value => setGlobalState('watermark', value)}
         />
       </div>
       <div className='theme-item'>
         <span>面包屑</span>
-        <Switch checked={breadcrumb} onChange={value => dispatch(setGlobalState({ key: 'breadcrumb', value }))} />
+        <Switch checked={breadcrumb} onChange={value => setGlobalState('breadcrumb', value)} />
       </div>
       <div className='theme-item'>
         <span>面包屑图标</span>
-        <Switch checked={breadcrumbIcon} onChange={value => dispatch(setGlobalState({ key: 'breadcrumbIcon', value }))} />
+        <Switch checked={breadcrumbIcon} onChange={value => setGlobalState('breadcrumbIcon', value)} />
       </div>
       <div className='theme-item'>
         <span>标签栏</span>
-        <Switch checked={tabs} onChange={value => dispatch(setGlobalState({ key: 'tabs', value }))} />
+        <Switch checked={tabs} onChange={value => setGlobalState('tabs', value)} />
       </div>
       <div className='theme-item'>
         <span>标签栏图标</span>
-        <Switch checked={tabsIcon} onChange={value => dispatch(setGlobalState({ key: 'tabsIcon', value }))} />
+        <Switch checked={tabsIcon} onChange={value => setGlobalState('tabsIcon', value)} />
       </div>
       <div className='theme-item'>
         <span>标签栏拖拽</span>
-        <Switch checked={tabsDrag} onChange={value => dispatch(setGlobalState({ key: 'tabsDrag', value }))} />
+        <Switch checked={tabsDrag} onChange={value => setGlobalState('tabsDrag', value)} />
       </div>
       <div className='theme-item'>
         <span>页脚</span>
-        <Switch checked={footer} onChange={value => dispatch(setGlobalState({ key: 'footer', value }))} />
+        <Switch checked={footer} onChange={value => setGlobalState('footer', value)} />
       </div>
     </Drawer>
   )

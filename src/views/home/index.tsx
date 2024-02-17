@@ -1,18 +1,18 @@
-import ECharts from '@/components/Echarts'
 import { Col, Row, Statistic, Tabs, Table } from 'antd'
+import { ArrowUpOutlined } from '@ant-design/icons'
 import { trendOptionsFn } from './config/trend'
+import { useGlobalStore } from '@/stores'
 import { overviewTabs, overviewOptionsFn } from './config/overview'
 import { columns, data } from './config/table'
 import { pieOptionsFn } from './config/proportion'
 import CountUp from 'react-countup'
-import { ArrowUpOutlined } from '@ant-design/icons'
+import ECharts from '@/components/Echarts'
 import './index.less'
-import { RootState, useSelector } from '@/redux'
 
 const formatter = (value: number | string) => <CountUp end={Number(value)} duration={2} separator=',' />
 
 const Home: React.FC = () => {
-  const isDark = useSelector((state: RootState) => state.global.isDark)
+  const isDark = useGlobalStore(state => state.isDark)
 
   return (
     <Row gutter={[15, 15]} className='analysis'>

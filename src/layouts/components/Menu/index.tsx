@@ -4,10 +4,8 @@ import { MetaProps, RouteObjectType } from '@/routers/interface'
 import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
 import { Icon } from '@/components/Icon'
-import { RootState, useSelector } from '@/redux'
+import { useGlobalStore, useAuthStore } from '@/stores'
 import { getOpenKeys } from '@/utils'
-import { shallowEqual } from 'react-redux'
-
 import './index.less'
 
 interface LayoutMenuProps {
@@ -23,19 +21,20 @@ const LayoutMenu: React.FC<LayoutMenuProps> = ({ mode, menuList, menuSplit }) =>
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  const { layout, isDark, accordion, isCollapse, siderInverted, headerInverted, showMenuList, flatMenuList } = useSelector(
-    (state: RootState) => ({
-      layout: state.global.layout,
-      isDark: state.global.isDark,
-      accordion: state.global.accordion,
-      isCollapse: state.global.isCollapse,
-      siderInverted: state.global.siderInverted,
-      headerInverted: state.global.headerInverted,
-      showMenuList: state.auth.showMenuList,
-      flatMenuList: state.auth.flatMenuList,
-    }),
-    shallowEqual
-  )
+  const { layout, isDark, accordion, isCollapse, siderInverted, headerInverted } = useGlobalStore(state => ({
+    layout: state.layout,
+    isDark: state.isDark,
+    accordion: state.accordion,
+    isCollapse: state.isCollapse,
+    siderInverted: state.siderInverted,
+    headerInverted: state.headerInverted,
+  }))
+
+  const { showMenuList, flatMenuList } = useAuthStore(state => ({
+    showMenuList: state.showMenuList,
+    flatMenuList: state.flatMenuList,
+  }))
+
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [splitSelectedKeys, setSplitSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])

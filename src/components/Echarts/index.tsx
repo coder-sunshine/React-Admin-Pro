@@ -1,10 +1,8 @@
-import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import echarts, { ECOption } from './config'
 import { ECElementEvent, EChartsType } from 'echarts'
-import { RootState, useSelector } from '@/redux'
-import { shallowEqual } from 'react-redux'
 import { useDebounceFn, useTimeout } from 'ahooks'
-import React from 'react'
+import { useGlobalStore } from '@/stores'
 
 export interface EChartProps {
   option: ECOption | null | undefined
@@ -22,16 +20,13 @@ const EChartInner = forwardRef<EChartsRef, EChartProps>(({ option, isResize = tr
   const cInstance = useRef<EChartsType>()
   const [isFirstRun, setIsFirstRun] = useState(true)
 
-  const { tabs, footer, maximize, menuSplit, isCollapse } = useSelector(
-    (state: RootState) => ({
-      tabs: state.global.tabs,
-      footer: state.global.footer,
-      maximize: state.global.maximize,
-      menuSplit: state.global.menuSplit,
-      isCollapse: state.global.isCollapse,
-    }),
-    shallowEqual
-  )
+  const { tabs, footer, maximize, isCollapse, menuSplit } = useGlobalStore(state => ({
+    tabs: state.tabs,
+    footer: state.footer,
+    maximize: state.maximize,
+    isCollapse: state.isCollapse,
+    menuSplit: state.menuSplit,
+  }))
 
   const handleClick = (event: ECElementEvent) => onClick && onClick(event)
 

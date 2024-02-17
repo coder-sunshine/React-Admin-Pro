@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { RootState, useDispatch, useSelector } from '@/redux'
+import { useAuthStore, useGlobalStore, useTabsStore } from '@/stores'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
 import { Tabs } from 'antd'
 import { useUpdateEffect } from 'ahooks'
@@ -7,9 +7,8 @@ import { DndContext, PointerSensor, useSensor, type DragEndEvent } from '@dnd-ki
 import { arrayMove, horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Icon } from '@/components/Icon'
-import { addTab, removeTab, setTabsList } from '@/redux/modules/tabs'
 import { MetaProps } from '@/routers/interface'
-import { TabsListProp } from '@/redux/interface'
+import { TabsListProp } from '@/stores/interface'
 import MoreButton from './components/MoreButton'
 import './index.less'
 
@@ -39,17 +38,24 @@ const DraggableTabNode = ({ ...props }: DraggableTabPaneProps) => {
 }
 
 const LayoutTabs: React.FC = () => {
-  const dispatch = useDispatch()
   const matches = useMatches()
   const navigate = useNavigate()
   const location = useLocation()
+
   const path = location.pathname + location.search
 
-  const tabs = useSelector((state: RootState) => state.global.tabs)
-  const tabsIcon = useSelector((state: RootState) => state.global.tabsIcon)
-  const tabsDrag = useSelector((state: RootState) => state.global.tabsDrag)
-  const tabsList = useSelector((state: RootState) => state.tabs.tabsList)
-  const flatMenuList = useSelector((state: RootState) => state.auth.flatMenuList)
+  const tabs = useGlobalStore(state => state.tabs)
+  const tabsIcon = useGlobalStore(state => state.tabsIcon)
+  const tabsDrag = useGlobalStore(state => state.tabsDrag)
+  const flatMenuList = useAuthStore(state => state.flatMenuList)
+
+  const { tabsList, addTab, removeTab, setTabsList } = useTabsStore(state => ({
+    tabsList: state.tabsList,
+    addTab: state.addTab,
+    removeTab: state.removeTab,
+    setTabsList: state.setTabsList,
+  }))
+
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   useEffect(() => initTabs(), [])
@@ -65,7 +71,7 @@ const LayoutTabs: React.FC = () => {
           path: item.path!,
           closable: !item.meta.isAffix,
         }
-        dispatch(addTab(tabValue))
+        addTab(tabValue)
       }
     })
   }
@@ -79,7 +85,7 @@ const LayoutTabs: React.FC = () => {
         path: path,
         closable: !meta.isAffix,
       }
-      dispatch(addTab(tabValue))
+      addTab(tabValue)
     }
   }, [matches])
 
@@ -100,7 +106,7 @@ const LayoutTabs: React.FC = () => {
 
   const onEdit = (targetKey: TargetKey, action: 'add' | 'remove') => {
     if (action === 'remove' && typeof targetKey === 'string') {
-      dispatch(removeTab({ path: targetKey, isCurrent: targetKey === path }))
+      removeTab(targetKey, targetKey === path)
     }
   }
 
@@ -108,7 +114,7 @@ const LayoutTabs: React.FC = () => {
     if (active.id !== over?.id) {
       const activeIndex = tabsList.findIndex(i => i.path === active.id)
       const overIndex = tabsList.findIndex(i => i.path === over?.id)
-      dispatch(setTabsList(arrayMove<TabsListProp>(tabsList, activeIndex, overIndex)))
+      setTabsList(arrayMove<TabsListProp>(tabsList, activeIndex, overIndex))
     }
   }
 

@@ -1,15 +1,14 @@
-import { RootState, useDispatch, useSelector } from '@/redux'
-import { setGlobalState } from '@/redux/modules/global'
+import { useGlobalStore } from '@/stores'
 
 const Maximize: React.FC = () => {
-  const dispatch = useDispatch()
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
 
-  const maximize = useSelector((state: RootState) => state.global.maximize)
+  const maximize = useGlobalStore(state => state.maximize)
 
   return (
     <>
       {maximize && (
-        <div className='maximize-icon' onClick={() => dispatch(setGlobalState({ key: 'maximize', value: false }))}>
+        <div className='maximize-icon' onClick={() => setGlobalState('maximize', false)}>
           <i className='iconfont icon-tuichu'></i>
         </div>
       )}

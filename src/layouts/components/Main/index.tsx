@@ -1,16 +1,15 @@
+import React from 'react'
 import { Layout } from 'antd'
-import { useLocation, useOutlet } from 'react-router-dom'
-import LayoutTabs from '../Tabs'
-import LayoutFooter from '@/layouts/components/Footer'
-import { createRef, useContext, useEffect } from 'react'
-import { RefreshContext } from '@/context/Refresh'
-import Maximize from './components/Maximize'
-import { RootState, useDispatch, useSelector } from '@/redux'
 import { useDebounceFn } from 'ahooks'
-import { setGlobalState } from '@/redux/modules/global'
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import { RefreshContext } from '@/context/Refresh'
+import { useEffect, createRef, useContext } from 'react'
 import { RouteObjectType } from '@/routers/interface'
-
+import { useLocation, useOutlet } from 'react-router-dom'
+import { useGlobalStore, useAuthStore } from '@/stores'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import Maximize from './components/Maximize'
+import LayoutTabs from '@/layouts/components/Tabs'
+import LayoutFooter from '@/layouts/components/Footer'
 import './index.less'
 
 type RouteTypeWithNodeRef = {
@@ -20,20 +19,22 @@ type RouteTypeWithNodeRef = {
 const { Content } = Layout
 
 const LayoutMain: React.FC = () => {
-  const dispatch = useDispatch()
   const { pathname } = useLocation()
   const outlet = useOutlet()
   const { outletShow } = useContext(RefreshContext)
-  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
-  const maximize = useSelector((state: RootState) => state.global.maximize)
-  const flatMenuList = useSelector((state: RootState) => state.auth.flatMenuList)
+
+  const maximize = useGlobalStore(state => state.maximize)
+  const isCollapse = useGlobalStore(state => state.isCollapse)
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
+
+  const flatMenuList = useAuthStore(state => state.flatMenuList)
 
   // 监听窗口变化，动态设置菜单栏关闭与否
   const { run } = useDebounceFn(
     () => {
       const screenWidth = document.body.clientWidth
       const shouldCollapse = screenWidth < 1200
-      if (isCollapse !== shouldCollapse) dispatch(setGlobalState({ key: 'isCollapse', value: shouldCollapse }))
+      if (isCollapse !== shouldCollapse) setGlobalState('isCollapse', shouldCollapse)
     },
     { wait: 100 }
   )

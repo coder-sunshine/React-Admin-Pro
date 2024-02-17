@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd'
-import { RootState, useSelector } from '@/redux'
+import { useGlobalStore } from '@/stores'
 import './index.less'
 
 const { Footer } = Layout
@@ -8,7 +8,7 @@ const { Footer } = Layout
 const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 
 const LayoutFooter: React.FC = () => {
-  const footer = useSelector((state: RootState) => state.global.footer)
+  const footer = useGlobalStore(state => state.footer)
 
   return (
     <React.Fragment>

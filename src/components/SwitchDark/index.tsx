@@ -1,11 +1,10 @@
 import { Button } from 'antd'
 import { IconFont } from '@/components/Icon'
-import { setGlobalState } from '@/redux/modules/global'
-import { RootState, useDispatch, useSelector } from '@/redux'
+import { useGlobalStore } from '@/stores'
 
 const SwitchDark: React.FC = () => {
-  const dispatch = useDispatch()
-  const isDark = useSelector((state: RootState) => state.global.isDark)
+  const isDark = useGlobalStore(state => state.isDark)
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
 
   return (
     <Button
@@ -13,7 +12,7 @@ const SwitchDark: React.FC = () => {
       size='large'
       className='switch-dark'
       icon={<IconFont style={{ fontSize: 22 }} type={isDark ? 'icon-sun' : 'icon-moon'} />}
-      onClick={() => dispatch(setGlobalState({ key: 'isDark', value: !isDark }))}
+      onClick={() => setGlobalState('isDark', !isDark)}
     ></Button>
   )
 }

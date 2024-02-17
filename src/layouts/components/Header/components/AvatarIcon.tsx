@@ -4,9 +4,7 @@ import { type MenuProps, Dropdown, Avatar } from 'antd'
 import { HOME_URL, LOGIN_URL } from '@/config'
 import { useNavigate } from 'react-router-dom'
 import { logoutApi } from '@/api/modules/login'
-import { useDispatch } from '@/redux'
-import { setToken } from '@/redux/modules/user'
-import { setAuthMenuList } from '@/redux/modules/auth'
+import { useUserStore, useAuthStore } from '@/stores'
 import { modal, message } from '@/hooks/useMessage'
 import InfoModal, { InfoModalRef } from './InfoModal'
 import PasswordModal, { PasswordModalRef } from './PasswordModal'
@@ -14,7 +12,8 @@ import avatar from '@/assets/images/avatar.png'
 
 const AvatarIcon: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const setToken = useUserStore(state => state.setToken)
+  const setAuthMenuList = useAuthStore(state => state.setAuthMenuList)
 
   const passRef = useRef<PasswordModalRef>(null)
   const infoRef = useRef<InfoModalRef>(null)
@@ -32,10 +31,10 @@ const AvatarIcon: React.FC = () => {
         await logoutApi()
 
         // Set token to empty
-        dispatch(setToken(''))
+        setToken('')
 
         // Set menu list empty
-        dispatch(setAuthMenuList([]))
+        setAuthMenuList([])
 
         // Jump to login page
         navigate(LOGIN_URL, { replace: true })

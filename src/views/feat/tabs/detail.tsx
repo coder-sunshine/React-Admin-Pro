@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Card, Typography } from 'antd'
-import { useDispatch } from '@/redux'
-import { setTabTitle } from '@/redux/modules/tabs'
+import { useTabsStore } from '@/stores'
 import { useLocation, useParams } from 'react-router-dom'
 
 const { Title } = Typography
@@ -11,10 +10,10 @@ const TabsDetail: React.FC = () => {
   const { search } = useLocation()
   const query = new URLSearchParams(search).get('params')
 
-  const dispatch = useDispatch()
+  const setTabTitle = useTabsStore(state => state.setTabTitle)
 
   useEffect(() => {
-    dispatch(setTabTitle(`No.${id} - Tab 详情`))
+    setTabTitle(`No.${id} - Tab 详情`)
   }, [])
 
   return (

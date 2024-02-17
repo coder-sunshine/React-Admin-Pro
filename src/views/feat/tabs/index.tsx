@@ -1,11 +1,9 @@
 import { useContext, useState } from 'react'
 import { HOME_URL } from '@/config'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { RootState, useDispatch, useSelector } from '@/redux'
+import { useGlobalStore, useTabsStore } from '@/stores'
 import { Button, Card, Divider, Input, Space, Typography } from 'antd'
 import { message } from '@/hooks/useMessage'
-import { closeMultipleTab, closeTabsOnSide, removeTab, setTabTitle } from '@/redux/modules/tabs'
-import { setGlobalState } from '@/redux/modules/global'
 import { RefreshContext } from '@/context/Refresh'
 import {
   ReloadOutlined,
@@ -20,14 +18,22 @@ import {
 } from '@ant-design/icons'
 
 const Tabs: React.FC = () => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const { pathname, search } = useLocation()
   const path = pathname + search
 
   const [value, setValue] = useState('')
-  const maximize = useSelector((state: RootState) => state.global.maximize)
+
+  const maximize = useGlobalStore(state => state.maximize)
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
+
+  const { removeTab, setTabTitle, closeTabsOnSide, closeMultipleTab } = useTabsStore(state => ({
+    removeTab: state.removeTab,
+    setTabTitle: state.setTabTitle,
+    closeTabsOnSide: state.closeTabsOnSide,
+    closeMultipleTab: state.closeMultipleTab,
+  }))
 
   const { updateOutletShow } = useContext(RefreshContext)
 
@@ -52,7 +58,7 @@ const Tabs: React.FC = () => {
             type='primary'
             onClick={() => {
               if (!value) return message.warning('请输入 Tab 标题')
-              dispatch(setTabTitle(value))
+              setTabTitle(value)
             }}
           >
             Submit
@@ -71,35 +77,27 @@ const Tabs: React.FC = () => {
           <Button
             type='primary'
             icon={maximize ? <CompressOutlined /> : <ExpandOutlined />}
-            onClick={() => dispatch(setGlobalState({ key: 'maximize', value: !maximize }))}
+            onClick={() => setGlobalState('maximize', !maximize)}
           >
             当前页全屏切换
           </Button>
-          <Button type='primary' icon={<CloseCircleOutlined />} onClick={() => dispatch(removeTab({ path, isCurrent: true }))}>
+          <Button type='primary' icon={<CloseCircleOutlined />} onClick={() => removeTab(path, true)}>
             关闭当前标签页
           </Button>
-          <Button
-            type='primary'
-            icon={<VerticalRightOutlined />}
-            onClick={() => dispatch(closeTabsOnSide({ path, type: 'left' }))}
-          >
+          <Button type='primary' icon={<VerticalRightOutlined />} onClick={() => closeTabsOnSide(path, 'left')}>
             关闭左侧标签页
           </Button>
-          <Button
-            type='primary'
-            icon={<VerticalLeftOutlined />}
-            onClick={() => dispatch(closeTabsOnSide({ path, type: 'right' }))}
-          >
+          <Button type='primary' icon={<VerticalLeftOutlined />} onClick={() => closeTabsOnSide(path, 'right')}>
             关闭右侧标签页
           </Button>
-          <Button type='primary' icon={<ColumnWidthOutlined />} onClick={() => dispatch(closeMultipleTab({ path }))}>
+          <Button type='primary' icon={<ColumnWidthOutlined />} onClick={() => closeMultipleTab(path)}>
             关闭其它标签页
           </Button>
           <Button
             type='primary'
             icon={<SwitcherOutlined />}
             onClick={() => {
-              dispatch(closeMultipleTab({}))
+              closeMultipleTab()
               navigate(HOME_URL)
             }}
           >

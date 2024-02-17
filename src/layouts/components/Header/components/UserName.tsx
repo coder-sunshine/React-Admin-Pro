@@ -1,7 +1,7 @@
-import { RootState, useSelector } from '@/redux'
+import { useUserStore } from '@/stores'
 
 const UserName: React.FC = () => {
-  const userInfo = useSelector((state: RootState) => state.user.userInfo)
+  const userInfo = useUserStore(state => state.userInfo)
 
   return <span className='username'>{userInfo.name}</span>
 }

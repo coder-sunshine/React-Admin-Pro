@@ -1,14 +1,14 @@
-import { RootState, useSelector } from '@/redux'
+import { useGlobalStore, useAuthStore } from '@/stores'
 import { Layout } from 'antd'
+import { useEffect, useState } from 'react'
+import { RouteObjectType } from '@/routers/interface'
+import { useLocation } from 'react-router-dom'
+import { getFirstLevelMenuList } from '@/utils'
 import ToolBarLeft from '@/layouts/components/Header/ToolBarLeft'
 import ToolBarRight from '@/layouts/components/Header/ToolBarRight'
 import LayoutMenu from '@/layouts/components/Menu'
 import LayoutMain from '@/layouts/components/Main'
 import CollapseIcon from '../components/Header/components/CollapseIcon'
-import { useEffect, useState } from 'react'
-import { RouteObjectType } from '@/routers/interface'
-import { useLocation } from 'react-router-dom'
-import { getFirstLevelMenuList } from '@/utils'
 import logo from '@/assets/images/logo.svg'
 
 import './index.less'
@@ -17,9 +17,9 @@ const { Header, Sider } = Layout
 const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 
 const LayoutClassic: React.FC = () => {
-  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
-  const menuSplit = useSelector((state: RootState) => state.global.menuSplit)
-  const showMenuList = useSelector((state: RootState) => state.auth.showMenuList)
+  const isCollapse = useGlobalStore(state => state.isCollapse)
+  const menuSplit = useGlobalStore(state => state.menuSplit)
+  const showMenuList = useAuthStore(state => state.showMenuList)
   // 获取所有第一级菜单 --> 用于拆分菜单
   const firstLevelMenuList = getFirstLevelMenuList(showMenuList)
 

@@ -1,24 +1,27 @@
 import { logoutApi } from '@/api/modules/login'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from '@/redux'
-import { setToken } from '@/redux/modules/user'
+import { useAuthStore, useUserStore } from '@/stores'
 import { TeamOutlined } from '@ant-design/icons'
 import { Alert, Button, Card, Divider } from 'antd'
-import { setAuthMenuList } from '@/redux/modules/auth'
 import { LOGIN_URL } from '@/config'
+import { message } from '@/hooks/useMessage'
 
 const AuthPage: React.FC = () => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const setToken = useUserStore(state => state.setToken)
+  const setAuthMenuList = useAuthStore(state => state.setAuthMenuList)
 
   const handleToLogin = async () => {
     await logoutApi()
 
-    dispatch(setToken(''))
+    setToken('')
 
-    dispatch(setAuthMenuList([]))
+    setAuthMenuList([])
 
     navigate(LOGIN_URL)
+
+    message.success('退出登录成功！')
   }
 
   return (

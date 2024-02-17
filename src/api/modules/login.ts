@@ -1,7 +1,7 @@
 import http from '@/api'
 import { ResLogin, ReqLogin } from '../interface'
 import { PORT1 } from '../config/servicePort'
-import { AuthState } from '@/redux/interface'
+import { AuthState } from '@/stores/interface'
 
 /**
  * @name 登录模块

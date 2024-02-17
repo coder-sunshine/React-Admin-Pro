@@ -6,6 +6,11 @@ export interface UserState {
   userInfo: { name: string }
 }
 
+export interface UserAction {
+  setToken: (token: UserState['token']) => void
+  setUserInfo: (token: UserState['userInfo']) => void
+}
+
 export type LayoutType = 'vertical' | 'classic' | 'transverse' | 'columns'
 
 export type LanguageType = 'zh' | 'en' | null
@@ -37,11 +42,20 @@ export interface GlobalState {
   themeDrawerVisible: boolean
 }
 
+export interface GlobalAction {
+  setGlobalState: <T extends keyof GlobalState>(key: T, value: GlobalState[T]) => void
+}
+
 export interface AuthState {
   authMenuList: RouteObjectType[]
   authButtonList: Record<string, string[]>
   showMenuList: RouteObjectType[]
   flatMenuList: RouteObjectType[]
+}
+
+export interface AuthAction {
+  setAuthButtonList: (authButtonList: AuthState['authButtonList']) => void
+  setAuthMenuList: (authMenuList: AuthState['authMenuList']) => void
 }
 
 export interface TabsListProp {
@@ -53,4 +67,13 @@ export interface TabsListProp {
 
 export interface TabsState {
   tabsList: TabsListProp[]
+}
+
+export interface TabsAction {
+  setTabsList: (tabsList: TabsState['tabsList']) => void
+  addTab: (tabs: TabsListProp) => void
+  removeTab: (path: string, isCurrent: boolean) => void
+  closeTabsOnSide: (path: string, type: 'left' | 'right') => void
+  closeMultipleTab: (path?: string) => void
+  setTabTitle: (title: string) => void
 }

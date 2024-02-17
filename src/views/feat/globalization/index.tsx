@@ -1,8 +1,7 @@
 import React from 'react'
 import type { RadioChangeEvent } from 'antd'
 import { Card, DatePicker, Divider, Pagination, Radio, Space, Table, TimePicker, Transfer, Typography } from 'antd'
-import { RootState, useDispatch, useSelector } from '@/redux'
-import { setGlobalState } from '@/redux/modules/global'
+import { useGlobalStore } from '@/stores'
 import { useTranslation } from 'react-i18next'
 
 const { Text } = Typography
@@ -16,12 +15,12 @@ const columns = [
 const Globalization: React.FC = () => {
   const { t } = useTranslation()
 
-  const dispatch = useDispatch()
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
 
-  const language = useSelector((state: RootState) => state.global.language)
+  const language = useGlobalStore(state => state.language)
 
   const changeLocale = (e: RadioChangeEvent) => {
-    dispatch(setGlobalState({ key: 'language', value: e.target.value }))
+    setGlobalState('language', e.target.value)
   }
 
   return (

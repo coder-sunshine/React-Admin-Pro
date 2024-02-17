@@ -61,6 +61,7 @@
     "hexs",
     "hoverable",
     "Iconfont",
+    "immer",
     "juejin",
     "liquidfill",
     "loglevel",
@@ -85,6 +86,7 @@
     "xiaoxi",
     "zhongyingwen",
     "zhuti",
-    "zlevel"
+    "zlevel",
+    "zustand"
   ]
 }

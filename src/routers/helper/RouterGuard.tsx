@@ -1,4 +1,4 @@
-import { RootState, useSelector } from '@/redux'
+import { useUserStore, useAuthStore } from '@/stores'
 import { useEffect } from 'react'
 import { useLoaderData, useNavigate, useLocation } from 'react-router-dom'
 import { MetaProps } from '../interface'
@@ -21,8 +21,8 @@ const RouterGuard: React.FC<RouterGuardProps> = props => {
   //挂载导航以提供非React函数组件或自定义React Hook函数调用
   window.$navigate = navigate
 
-  const token = useSelector((state: RootState) => state.user.token)
-  const authMenuList = useSelector((state: RootState) => state.auth.authMenuList)
+  const token = useUserStore(state => state.token)
+  const authMenuList = useAuthStore(state => state.authMenuList)
 
   useEffect(() => {
     const meta = loader as MetaProps

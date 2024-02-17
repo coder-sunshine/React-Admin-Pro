@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Layout } from 'antd'
-import { type RootState, useSelector } from '@/redux'
+import { useGlobalStore, useAuthStore } from '@/stores'
 import { type RouteObjectType } from '@/routers/interface'
 import { useNavigate, useLocation } from 'react-router-dom'
 import ToolBarLeft from '@/layouts/components/Header/ToolBarLeft'
@@ -17,8 +17,8 @@ const APP_TITLE = import.meta.env.VITE_GLOB_APP_TITLE
 const LayoutColumns: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const isCollapse = useSelector((state: RootState) => state.global.isCollapse)
-  const showMenuList = useSelector((state: RootState) => state.auth.showMenuList)
+  const isCollapse = useGlobalStore(state => state.isCollapse)
+  const showMenuList = useAuthStore(state => state.showMenuList)
 
   const [menuActive, setMenuActive] = useState('')
   const [subMenuList, setSubMenuList] = useState<RouteObjectType[]>([])

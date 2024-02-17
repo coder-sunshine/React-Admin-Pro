@@ -2,7 +2,7 @@ import { CSSProperties, useContext } from 'react'
 import { Dropdown, type MenuProps } from 'antd'
 import { IconFont } from '@/components/Icon'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from '@/redux'
+import { useGlobalStore, useTabsStore } from '@/stores'
 import { HOME_URL } from '@/config'
 import {
   CloseCircleOutlined,
@@ -13,8 +13,6 @@ import {
   VerticalLeftOutlined,
   VerticalRightOutlined,
 } from '@ant-design/icons'
-import { removeTab, closeTabsOnSide, closeMultipleTab } from '@/redux/modules/tabs'
-import { setGlobalState } from '@/redux/modules/global'
 import { RefreshContext } from '@/context/Refresh'
 import { useTranslation } from 'react-i18next'
 
@@ -26,7 +24,14 @@ const style: CSSProperties = { fontSize: '14px' }
 
 const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
+
+  const { removeTab, closeTabsOnSide, closeMultipleTab } = useTabsStore(state => ({
+    removeTab: state.removeTab,
+    closeTabsOnSide: state.closeTabsOnSide,
+    closeMultipleTab: state.closeMultipleTab,
+  }))
 
   const { t } = useTranslation()
 
@@ -48,7 +53,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
       key: '2',
       label: <span>{t('tabs.maximize')}</span>,
       icon: <ExpandOutlined style={style} />,
-      onClick: () => dispatch(setGlobalState({ key: 'maximize', value: true })),
+      onClick: () => setGlobalState('maximize', true),
     },
     {
       type: 'divider',
@@ -58,19 +63,19 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
       key: '3',
       label: <span>{t('tabs.closeCurrent')}</span>,
       icon: <CloseCircleOutlined style={style} />,
-      onClick: () => dispatch(removeTab({ path, isCurrent: true })),
+      onClick: () => removeTab(path, true),
     },
     {
       key: '4',
       label: <span>{t('tabs.closeLeft')}</span>,
       icon: <VerticalRightOutlined style={style} />,
-      onClick: () => dispatch(closeTabsOnSide({ path, type: 'left' })),
+      onClick: () => closeTabsOnSide(path, 'left'),
     },
     {
       key: '5',
       label: <span>{t('tabs.closeRight')}</span>,
       icon: <VerticalLeftOutlined style={style} />,
-      onClick: () => dispatch(closeTabsOnSide({ path, type: 'right' })),
+      onClick: () => closeTabsOnSide(path, 'right'),
     },
     {
       type: 'divider',
@@ -79,14 +84,14 @@ const MoreButton: React.FC<MoreButtonProps> = ({ path }) => {
       key: '6',
       label: <span>{t('tabs.closeOther')}</span>,
       icon: <ColumnWidthOutlined style={style} />,
-      onClick: () => dispatch(closeMultipleTab({ path })),
+      onClick: () => closeMultipleTab(path),
     },
     {
       key: '7',
       label: <span>{t('tabs.closeAll')}</span>,
       icon: <SwitcherOutlined style={style} />,
       onClick: () => {
-        dispatch(closeMultipleTab({}))
+        closeMultipleTab()
         navigate(HOME_URL)
       },
     },

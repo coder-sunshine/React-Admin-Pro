@@ -1,5 +1,5 @@
 import { Card, Col, Descriptions, Row, Typography } from 'antd'
-import { RootState, useSelector } from '@/redux'
+import { useGlobalStore } from '@/stores'
 import { option1Fn, option2Fn, option3Fn, option4Fn, option5Fn, option6Fn } from './config'
 import ECharts from '@/components/Echarts'
 import './index.less'
@@ -7,7 +7,7 @@ import './index.less'
 const { Link } = Typography
 
 const EChartsPage: React.FC = () => {
-  const isDark = useSelector((state: RootState) => state.global.isDark)
+  const isDark = useGlobalStore(state => state.isDark)
 
   return (
     <Row gutter={[12, 10]}>

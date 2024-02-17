@@ -1,5 +1,5 @@
 import { ResPage } from '@/api/interface'
-import { store } from '@/redux'
+import { useAuthStore } from '@/stores'
 import { RouteObjectType } from '@/routers/interface'
 import { RequestData } from '@ant-design/pro-components'
 
@@ -138,7 +138,7 @@ export function getUrlWithParams() {
  * @returns {Object} 匹配的菜单对象，如果没有找到匹配，则为空。
  */
 export function getMenuByPath(
-  menulist: RouteObjectType[] = store.getState().auth.flatMenuList,
+  menulist: RouteObjectType[] = useAuthStore.getState().flatMenuList,
   path: string = getUrlWithParams()
 ) {
   const menuItem = menulist.find(menu => {

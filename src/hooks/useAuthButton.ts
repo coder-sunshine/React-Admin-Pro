@@ -1,12 +1,12 @@
-import { RootState, useSelector } from '@/redux'
 import { getMenuByPath } from '@/utils'
+import { useAuthStore } from '@/stores'
 
 const useAuthButton = () => {
   const meta = getMenuByPath()?.meta ?? {}
 
   let currentPageAuthButton: Record<string, boolean> = {}
 
-  const authButtonList = useSelector((state: RootState) => state.auth.authButtonList)
+  const authButtonList = useAuthStore(state => state.authButtonList)
   authButtonList[meta.key!]?.forEach(item => (currentPageAuthButton[item] = true))
   return {
     BUTTONS: currentPageAuthButton,

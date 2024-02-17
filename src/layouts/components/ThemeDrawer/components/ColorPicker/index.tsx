@@ -3,9 +3,7 @@ import { Input } from 'antd'
 import { HexColorPicker } from 'react-colorful'
 import { isHexColor } from '@/utils/is'
 import { convertToSixDigitHexColor } from '@/utils'
-
-import { setGlobalState } from '@/redux/modules/global'
-import { RootState, useDispatch, useSelector } from '@/redux'
+import { useGlobalStore } from '@/stores'
 import './index.less'
 
 const presetColors = [
@@ -24,12 +22,13 @@ const presetColors = [
 ]
 
 const ColorPicker = () => {
-  const dispatch = useDispatch()
-  const primary = useSelector((state: RootState) => state.global.primary)
+  const primary = useGlobalStore(state => state.primary)
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
+
   const [inputPrimary, setInputPrimary] = useState(primary)
 
   const changePrimary = (value: string) => {
-    dispatch(setGlobalState({ key: 'primary', value }))
+    setGlobalState('primary', value)
   }
 
   return (

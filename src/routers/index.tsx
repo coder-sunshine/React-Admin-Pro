@@ -1,13 +1,14 @@
+import { useEffect, useState } from 'react'
 import { RouterProvider as Router, createHashRouter, createBrowserRouter } from 'react-router-dom'
 import type { RouteObject } from 'react-router-dom'
 import type { RouteObjectType } from './interface'
 import { wrappedStaticRouter } from './modules/staticRouter'
+import { useUserStore, useAuthStore } from '@/stores'
+import { convertToDynamicRouterFormat } from './helper/ConvertRouter'
 import useMessage from '@/hooks/useMessage'
-import { useEffect, useState } from 'react'
 import NotFound from '@/components/Error/404'
 import useTheme from '@/hooks/useTheme'
-import { RootState, useSelector } from '@/redux'
-import { convertToDynamicRouterFormat } from './helper/ConvertRouter'
+
 import usePermissions from '@/hooks/usePermissions'
 
 const mode = import.meta.env.VITE_ROUTER_MODE
@@ -18,8 +19,8 @@ const RouterProvider: React.FC = () => {
   useMessage()
 
   const { initPermissions } = usePermissions()
-  const token = useSelector((state: RootState) => state.user.token)
-  const authMenuList = useSelector((state: RootState) => state.auth.authMenuList)
+  const token = useUserStore(state => state.token)
+  const authMenuList = useAuthStore(state => state.authMenuList)
 
   const [routerList, setRouterList] = useState<RouteObjectType[]>(wrappedStaticRouter)
 

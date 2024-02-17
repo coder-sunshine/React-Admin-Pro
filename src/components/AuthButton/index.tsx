@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from '@/redux'
+import { useAuthStore } from '@/stores'
 import { getMenuByPath } from '@/utils'
 
 interface AuthButtonProps {
@@ -8,7 +8,7 @@ interface AuthButtonProps {
 }
 
 const AuthButton: React.FC<AuthButtonProps> = ({ authority, children }) => {
-  const authButtonList = useSelector(state => state.auth.authButtonList) ?? []
+  const authButtonList = useAuthStore(state => state.authButtonList) ?? []
 
   const meta = getMenuByPath()?.meta ?? {}
   let isAuth = false

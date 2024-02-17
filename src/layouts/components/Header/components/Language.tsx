@@ -1,14 +1,13 @@
 import { type MenuProps, Dropdown } from 'antd'
-import { useDispatch, RootState, useSelector } from '@/redux'
-import { setGlobalState } from '@/redux/modules/global'
-import { LanguageType } from '@/redux/interface'
+import { useGlobalStore } from '@/stores'
+import { LanguageType } from '@/stores/interface'
 
 const Language: React.FC = () => {
-  const dispatch = useDispatch()
-  const language = useSelector((state: RootState) => state.global.language)
+  const setGlobalState = useGlobalStore(state => state.setGlobalState)
+  const language = useGlobalStore(state => state.language)
 
   const setLanguage: MenuProps['onClick'] = val => {
-    dispatch(setGlobalState({ key: 'language', value: val.key as LanguageType }))
+    setGlobalState('language', val.key as LanguageType)
   }
 
   const items: MenuProps['items'] = [

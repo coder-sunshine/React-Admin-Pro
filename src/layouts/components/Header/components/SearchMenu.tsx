@@ -3,13 +3,13 @@ import { Empty, Input, InputRef, Modal } from 'antd'
 import { EnterOutlined, SearchOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useDebounce } from 'ahooks'
-import { RootState, useSelector } from '@/redux'
+import { useAuthStore } from '@/stores'
 import { Icon } from '@/components/Icon'
 import { RouteObjectType } from '@/routers/interface'
 
 const SearchMenu: React.FC = () => {
   const navigate = useNavigate()
-  const flatMenuList = useSelector((state: RootState) => state.auth.flatMenuList)
+  const flatMenuList = useAuthStore(state => state.flatMenuList)
 
   const inputRef = useRef<InputRef>(null)
   const menuListRef = useRef<HTMLDivElement>(null)
