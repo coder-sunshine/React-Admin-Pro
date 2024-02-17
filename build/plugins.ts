@@ -24,6 +24,8 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
     createCompression(viteEnv),
     // 注入变量到html文件
     createHtmlPlugin({
+      minify: true,
+      // viteNext: true,
       inject: {
         data: { title: VITE_GLOB_APP_TITLE },
       },

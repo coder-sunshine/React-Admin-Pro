@@ -34,7 +34,7 @@ const QRCodePage: React.FC = () => {
       </Col>
       <Col xl={6} lg={8} md={12} sm={24} xs={24}>
         <Card hoverable title='不同的状态'>
-          <Space wrap>
+          <Space>
             <QRCode value='https://ant.design/' status='loading' />
             <QRCode value='https://ant.design/' status='expired' onRefresh={() => console.log('refresh')} />
           </Space>
