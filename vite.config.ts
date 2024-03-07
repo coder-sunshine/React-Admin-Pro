@@ -68,6 +68,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           chunkFileNames: 'assets/js/[name]-[hash].js',
           entryFileNames: 'assets/js/[name]-[hash].js',
           assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+          // 设置第三方库的包只要不更新就不重新打包
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor'
+            }
+          },
         },
       },
     },
