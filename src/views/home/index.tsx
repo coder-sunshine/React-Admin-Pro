@@ -6,7 +6,7 @@ import { overviewTabs, overviewOptionsFn } from './config/overview'
 import { columns, data } from './config/table'
 import { pieOptionsFn } from './config/proportion'
 import CountUp from 'react-countup'
-import ECharts from '@/components/Echarts'
+import ECharts from '@/components/ECharts'
 import './index.less'
 
 const formatter = (value: number | string) => <CountUp end={Number(value)} duration={2} separator=',' />

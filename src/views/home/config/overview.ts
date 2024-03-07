@@ -1,4 +1,4 @@
-import echarts, { ECOption } from '@/components/Echarts/config'
+import echarts, { ECOption } from '@/components/ECharts/config'
 
 export const overviewTabs = [
   { label: 'Today', key: '1' },

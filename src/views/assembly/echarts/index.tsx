@@ -1,7 +1,7 @@
 import { Card, Col, Descriptions, Row, Typography } from 'antd'
 import { useGlobalStore } from '@/stores'
 import { option1Fn, option2Fn, option3Fn, option4Fn, option5Fn, option6Fn } from './config'
-import ECharts from '@/components/Echarts'
+import ECharts from '@/components/ECharts'
 import './index.less'
 
 const { Link } = Typography
