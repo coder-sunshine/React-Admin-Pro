@@ -1,4 +1,4 @@
-import { ECOption } from '@/components/ECharts/config'
+import { ECOption } from '@/components/Echarts/config'
 
 export const option1Fn = (isDark: boolean): ECOption => {
   return {

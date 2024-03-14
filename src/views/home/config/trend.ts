@@ -1,4 +1,4 @@
-import { ECOption } from '@/components/ECharts/config'
+import { ECOption } from '@/components/Echarts/config'
 
 export const trendOptionsFn = (data: number[]): ECOption => {
   return {

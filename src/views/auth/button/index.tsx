@@ -8,9 +8,14 @@ import {
   VerticalAlignTopOutlined,
 } from '@ant-design/icons'
 import AuthButton from '@/components/AuthButton'
+import { toast, Toaster } from 'react-hot-toast'
 
 const AuthButtonPage: React.FC = () => {
   const { BUTTONS } = useAuthButton()
+
+  const handleClick = () => {
+    toast('新增成功')
+  }
 
   return (
     <Card>
@@ -18,10 +23,10 @@ const AuthButtonPage: React.FC = () => {
       <Divider orientation='left' plain className='mt30'>
         使用 Hooks 绑定按钮权限
       </Divider>
-
+      <Toaster></Toaster>
       <Space>
         {BUTTONS.add && (
-          <Button type='primary' icon={<PlusCircleOutlined />}>
+          <Button type='primary' icon={<PlusCircleOutlined onClick={handleClick} />}>
             新增
           </Button>
         )}

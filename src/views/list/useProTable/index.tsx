@@ -112,7 +112,7 @@ const useProTable = () => {
         persistenceType: 'localStorage',
       }}
       rowKey='id'
-      search={{ labelWidth: 'auto' }}
+      search={{ labelWidth: 'auto', span: 6, showHiddenNum: true }}
       pagination={pagination}
       dateFormatter='string'
       headerTitle='使用 ProTable'
